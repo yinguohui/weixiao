@@ -36,7 +36,6 @@ public class People {
                 "name='" + name + '\'' +
                 ", age=" + age +
                 '}';
-
     }
 
 }
