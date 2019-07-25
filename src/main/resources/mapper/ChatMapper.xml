@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xihua.weixiao.dao.ChatMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xihua.weixiao.entity.Chat">
+        <id column="chat_id" property="chatId" />
+        <result column="chat_no" property="chatNo" />
+        <result column="chat_send_id" property="chatSendId" />
+        <result column="chat_revice_id" property="chatReviceId" />
+        <result column="chat_content" property="chatContent" />
+        <result column="chat_status" property="chatStatus" />
+        <result column="chat_create_time" property="chatCreateTime" />
+    </resultMap>
+
+</mapper>

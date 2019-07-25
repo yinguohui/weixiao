@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xihua.weixiao.dao.LikeDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xihua.weixiao.entity.LikeDetail">
+        <id column="likedetail_id" property="likedetailId" />
+        <result column="likedetail_no" property="likedetailNo" />
+        <result column="likedetail_user_id" property="likedetailUserId" />
+        <result column="likedetail_topic_id" property="likedetailTopicId" />
+        <result column="likedetail_status" property="likedetailStatus" />
+        <result column="likedetail_create_time" property="likedetailCreateTime" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xihua.weixiao.dao.DonationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xihua.weixiao.entity.Donation">
+        <id column="donation_id" property="donationId" />
+        <result column="donation_no" property="donationNo" />
+        <result column="donation_name" property="donationName" />
+        <result column="doantion_place" property="doantionPlace" />
+        <result column="doantion_time" property="doantionTime" />
+        <result column="donation_num" property="donationNum" />
+        <result column="doantion_descrption" property="doantionDescrption" />
+        <result column="doantion_status" property="doantionStatus" />
+        <result column="donation_user_id" property="donationUserId" />
+        <result column="donation_create_time" property="donationCreateTime" />
+    </resultMap>
+
+</mapper>

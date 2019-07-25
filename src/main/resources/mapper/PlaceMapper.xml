@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xihua.weixiao.dao.PlaceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xihua.weixiao.entity.Place">
+        <id column="place_id" property="placeId" />
+        <result column="place_no" property="placeNo" />
+        <result column="place_name" property="placeName" />
+        <result column="place_parent_id" property="placeParentId" />
+        <result column="place_create_time" property="placeCreateTime" />
+        <result column="place_status" property="placeStatus" />
+        <result column="place_user_id" property="placeUserId" />
+    </resultMap>
+
+</mapper>

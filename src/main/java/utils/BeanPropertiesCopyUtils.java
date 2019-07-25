@@ -1,7 +1,6 @@
 package utils;
 
-import com.xihua.weixiao.entiy.People;
-import com.xihua.weixiao.entiy.PeopleCopy;
+
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -16,10 +15,4 @@ public class BeanPropertiesCopyUtils {
         return des;
     }
 
-    public static void main(String[] args) {
-        People A = new People();
-        A.setAge(12);
-        A.setName("淫秽");
-        System.out.println(BeanPropertiesCopyUtils.copyProperties(A,new PeopleCopy()));
-    }
 }

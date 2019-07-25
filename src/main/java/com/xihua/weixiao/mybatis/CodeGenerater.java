@@ -72,9 +72,9 @@ public class CodeGenerater {
         pc.setController("controller");
         pc.setService("service");
         pc.setServiceImpl("serviceImpl");
-        pc.setMapper("mapper");
+        pc.setMapper("com/xihua/weixiao/dao");
         pc.setEntity("entity");
-        pc.setXml("xml");
+        pc.setXml("com/xihua/weixiao/dao");
         mpg.setPackageInfo(pc);
 
         // 执行生成

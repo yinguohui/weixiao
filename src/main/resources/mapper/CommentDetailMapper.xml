@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xihua.weixiao.dao.CommentDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xihua.weixiao.entity.CommentDetail">
+        <id column="comment_detail_id" property="commentDetailId" />
+        <result column="comment_detail_no" property="commentDetailNo" />
+        <result column="comment_detail_user_id" property="commentDetailUserId" />
+        <result column="comment_detail_topic_id" property="commentDetailTopicId" />
+        <result column="comment_detail_create_time" property="commentDetailCreateTime" />
+        <result column="comment_detail_status" property="commentDetailStatus" />
+    </resultMap>
+
+</mapper>

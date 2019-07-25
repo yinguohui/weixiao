@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xihua.weixiao.dao.LostinfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xihua.weixiao.entity.Lostinfo">
+        <id column="lostinfo_id" property="lostinfoId" />
+        <result column="lostinfo_no" property="lostinfoNo" />
+        <result column="lostinfo_name" property="lostinfoName" />
+        <result column="lostinfo_description" property="lostinfoDescription" />
+        <result column="lostinfo_img" property="lostinfoImg" />
+        <result column="lostinfo_status" property="lostinfoStatus" />
+        <result column="lostinfo_place" property="lostinfoPlace" />
+        <result column="lostinfo_type" property="lostinfoType" />
+        <result column="lostinfo_create_time" property="lostinfoCreateTime" />
+        <result column="lostinfo_user_id" property="lostinfoUserId" />
+    </resultMap>
+
+</mapper>

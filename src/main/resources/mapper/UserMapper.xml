@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xihua.weixiao.dao.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xihua.weixiao.entity.User">
+        <id column="user_id" property="userId" />
+        <result column="user_no" property="userNo" />
+        <result column="user_name" property="userName" />
+        <result column="user_password" property="userPassword" />
+        <result column="user_status" property="userStatus" />
+        <result column="user_img" property="userImg" />
+        <result column="user_create_time" property="userCreateTime" />
+        <result column="user_tel" property="userTel" />
+        <result column="user_birth" property="userBirth" />
+        <result column="user_role" property="userRole" />
+        <result column="user_sign" property="userSign" />
+    </resultMap>
+    
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
+      insert into user(user_no,user_password,user_tel) VALUES (#{userNo },#{userPassword }, #{userTel})
+    </insert>
+    <select id="selectIdInLogin" resultType="com.xihua.weixiao.vo.response.IdrResponse">
+        SELECT user_id FROM user WHERE user_tel = #{userTel} AND user_password = #{userPassword}
+    </select>
+    <select id="updatePassword">
+      UPDATE user set user_password = {userPassword} WHERE user_id = #{userId}
+    </select>
+</mapper>
