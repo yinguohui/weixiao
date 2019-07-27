@@ -1,4 +1,4 @@
-package utils;
+package com.xihua.weixiao.utils;
 
 
 import org.springframework.beans.BeanUtils;
