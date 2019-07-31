@@ -14,6 +14,7 @@ import java.io.Serializable;
  * @author YGH123
  * @since 2019-07-24
  */
+
 @TableName("user")
 public class User implements Serializable {
 

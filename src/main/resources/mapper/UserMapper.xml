@@ -23,7 +23,13 @@
     <select id="selectIdInLogin" resultType="com.xihua.weixiao.vo.response.IdrResponse">
         SELECT user_id FROM user WHERE user_tel = #{userTel} AND user_password = #{userPassword}
     </select>
-    <select id="updatePassword">
-      UPDATE user set user_password = {userPassword} WHERE user_id = #{userId}
+    <update id="updatePassword">
+      UPDATE user set user_password = #{userPassword} WHERE user_tel = #{userTel}
+    </update>
+    <select id="repeatTel" resultType="java.lang.Integer">
+        SELECT count(*) FROM user WHERE user_tel = #{userTel}
+    </select>
+    <select id="selectByTel" resultMap="BaseResultMap">
+        SELECT * FROM user WHERE user_tel = #{userTel}
     </select>
 </mapper>

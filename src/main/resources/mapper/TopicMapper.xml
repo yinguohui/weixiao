@@ -15,4 +15,13 @@
         <result column="topic_user_id" property="topicUserId" />
     </resultMap>
 
+    <select id="queryTopicAll" resultType="com.xihua.weixiao.entity.Topic">
+        SELECT * FROM topic limit #{start} , #{end}
+    </select>
+    <select id="queryTopicResponse" resultType="com.xihua.weixiao.vo.response.TopicResponse">
+        SELECT * FROM topic WHERE topic_id = #{id}
+    </select>
+    <select id="queryMineTopic" resultType="com.xihua.weixiao.entity.Topic">
+        SELECT * FROM topic WHERE topic_user_id = #{id}
+    </select>
 </mapper>

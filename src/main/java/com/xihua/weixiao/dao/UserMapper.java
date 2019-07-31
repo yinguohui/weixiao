@@ -21,5 +21,10 @@ public interface UserMapper extends BaseMapper<User> {
 
     public IdrResponse selectIdInLogin(LoginRequest loginRequest);
 
-    public Integer updatePassword(LoginRequest loginRequest);
+    public Integer updatePassword(User user);
+
+    //查询电话号码重复
+    public Integer repeatTel(String userTel);
+    //通过电话号码茶人
+    public User selectByTel(String userTel);
 }
