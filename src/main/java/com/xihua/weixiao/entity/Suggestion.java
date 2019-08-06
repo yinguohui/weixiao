@@ -3,6 +3,9 @@ package com.xihua.weixiao.entity;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -17,9 +20,8 @@ import java.io.Serializable;
 public class Suggestion implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @TableId("suggestion_id")
-    private Integer suggestionId;
+    @TableId(type= IdType.AUTO)
+    private int suggestionId;
     @TableField("suggestion_no")
     private String suggestionNo;
     @TableField("suggestion_content")

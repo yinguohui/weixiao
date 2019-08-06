@@ -42,7 +42,7 @@ public class DonationController {
      * @Author: ygh
      * @Date: 2019/7/30 23:12
      */
-    @RequestMapping("/add")
+    @RequestMapping("/query")
     @ResponseBody
     public ApiResult getDonationByMe(Donation donation) {
         try {

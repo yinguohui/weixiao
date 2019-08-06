@@ -12,5 +12,7 @@
         <result column="suggestion_create_time" property="suggestionCreateTime" />
         <result column="suggestion_status" property="suggestionStatus" />
     </resultMap>
-
+    <select id="getSuggestionByMyId">
+         SELECT * FROM suggestion WHERE suggestion_user_id = #{id} limit #{current} ,#{size}
+    </select>
 </mapper>

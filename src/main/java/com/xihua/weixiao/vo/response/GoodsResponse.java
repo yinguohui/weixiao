@@ -1,19 +1,33 @@
-package com.xihua.weixiao.vo.request;
+package com.xihua.weixiao.vo.response;
 
-public class GoodsRequestBean {
+/**
+ * @ClassName GoodsResponse
+ * @Auhtor ygh
+ * @DATE 2019/8/4 18:38
+ **/
+public class GoodsResponse{
+    private Integer goodsId;
     private String goodsName;
     private String goodsPlace;
     private String goodsDesciption;
     private Integer goodsType;
     private Double goodsPrice;
-    private Integer goodsUserNo;
+    private String goodsImg;
 
-    public Integer getGoodsUserNo() {
-        return goodsUserNo;
+    public Integer getGoodsId() {
+        return goodsId;
     }
 
-    public void setGoodsUserNo(Integer goodsUserNo) {
-        this.goodsUserNo = goodsUserNo;
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public String getGoodsImg() {
+        return goodsImg;
+    }
+
+    public void setGoodsImg(String gooodsImg) {
+        this.goodsImg = gooodsImg;
     }
 
     public String getGoodsName() {

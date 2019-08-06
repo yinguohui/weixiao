@@ -10,6 +10,7 @@ import com.xihua.weixiao.vo.request.TopicRequest;
 import com.xihua.weixiao.vo.response.TopicResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +32,8 @@ import java.util.UUID;
  */
 @Service
 public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements TopicService {
+    @Value("server.url")
+    private String serverUrl;
 
     @Resource
     private TopicMapper mapper;
@@ -62,7 +65,7 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
             } catch (IOException e) {
                 LOGGER.info("转化文件失败",e);
             }
-            name = name + "http://47.112.28.150:8080/templates/images/" + tFileName + "/" + file.getName() + "*&";
+            name = name + serverUrl + tFileName + "/" + file.getName() + "*&";
         }
         if (!name.equals("")){
             name = name.substring(0,name.length()-1);

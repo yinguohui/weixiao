@@ -4,6 +4,14 @@ package com.xihua.weixiao.controller;
 import com.xihua.weixiao.entity.Suggestion;
 import com.xihua.weixiao.entity.Topic;
 import com.xihua.weixiao.result.ApiResult;
+import com.xihua.weixiao.service.SuggestionService;
+import com.xihua.weixiao.serviceImpl.SuggestionServiceImpl;
+import com.xihua.weixiao.vo.request.IdQueryRequest;
+import com.xihua.weixiao.vo.request.IdRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -23,6 +31,12 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/suggestion")
 public class SuggestionController {
+
+
+    @Autowired
+    private SuggestionService service;
+    private static final Logger LOGGER = LoggerFactory.getLogger(SuggestionController.class);
+
     /**
      * @Description : 查询自己的反馈
      * @Author: ygh
@@ -30,11 +44,13 @@ public class SuggestionController {
      */
     @RequestMapping("/querymyid")
     @ResponseBody
-    public ApiResult getSuggestionByMyId(Suggestion topic) {
+    public ApiResult getSuggestionByMyId(IdQueryRequest request) {
         try {
             ApiResult apiResult = ApiResult.success();
+            apiResult.setData(service.getSuggestionByMyId(request));
             return apiResult;
         } catch (Exception e) {
+            LOGGER.info("提交意见失败",e);
             return ApiResult.failure("");
         }
     }
@@ -45,11 +61,14 @@ public class SuggestionController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public ApiResult addSuggestion(Suggestion topic, MultipartFile [] files, HttpServletRequest request) {
+    public ApiResult addSuggestion(Suggestion suggestion, MultipartFile [] files) {
         try {
             ApiResult apiResult = ApiResult.success();
+            int s = files.length;
+            apiResult.setData(service.addSuggestion(suggestion,files));
             return apiResult;
         } catch (Exception e) {
+            LOGGER.info("提交意见失败",e);
             return ApiResult.failure("");
         }
     }
@@ -75,9 +94,10 @@ public class SuggestionController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public ApiResult deleteSuggestionById(Suggestion topic) {
+    public ApiResult deleteSuggestionById(IdRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
+            apiResult.setData(service.deleteById(idRequest.getId()));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");

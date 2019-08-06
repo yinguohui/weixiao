@@ -17,4 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review> implements ReviewService {
 
+    @Override
+    public int addReview(Review review) {
+        return 0;
+    }
 }

@@ -15,5 +15,7 @@
         <result column="lostinfo_create_time" property="lostinfoCreateTime" />
         <result column="lostinfo_user_id" property="lostinfoUserId" />
     </resultMap>
-
+    <select id="queryLostinfo" resultType="com.xihua.weixiao.entity.Lostinfo">
+        SELECT * FROM lostinfo WHERE lostinfo_user_id = #{id} limit #{current} ,#{size}
+    </select>
 </mapper>

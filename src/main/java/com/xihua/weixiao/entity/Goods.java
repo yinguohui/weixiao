@@ -37,7 +37,7 @@ public class Goods implements Serializable {
     @TableField("goods_status")
     private Integer goodsStatus;
     @TableField("goods_user_no")
-    private String goodsUserNo;
+    private Integer goodsUserNo;
     @TableField("goods_type")
     private Integer goodsType;
     @TableField("goods_num")
@@ -102,11 +102,11 @@ public class Goods implements Serializable {
         this.goodsStatus = goodsStatus;
     }
 
-    public String getGoodsUserNo() {
+    public Integer getGoodsUserNo() {
         return goodsUserNo;
     }
 
-    public void setGoodsUserNo(String goodsUserNo) {
+    public void setGoodsUserNo(Integer goodsUserNo) {
         this.goodsUserNo = goodsUserNo;
     }
 

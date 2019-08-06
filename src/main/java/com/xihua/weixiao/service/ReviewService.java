@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2019-07-24
  */
 public interface ReviewService extends IService<Review> {
-
+    public int addReview(Review review);
 }

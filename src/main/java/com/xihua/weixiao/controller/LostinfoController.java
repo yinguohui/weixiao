@@ -1,15 +1,19 @@
 package com.xihua.weixiao.controller;
 
 
-import com.xihua.weixiao.entity.Donation;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.xihua.weixiao.entity.Lostinfo;
 import com.xihua.weixiao.result.ApiResult;
+import com.xihua.weixiao.service.LostinfoService;
+import com.xihua.weixiao.vo.request.IdQueryRequest;
+import com.xihua.weixiao.vo.request.IdRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -23,6 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/lostinfo")
 public class LostinfoController {
+
+    @Resource
+    private LostinfoService lostinfoService;
     /**
      * @Description : 添加失物招领
      * @Author: ygh
@@ -30,9 +37,11 @@ public class LostinfoController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public ApiResult addLostinfo(Lostinfo donation, MultipartFile[] files, HttpServletRequest request) {
+    public ApiResult addLostinfo(Lostinfo lostinfo, MultipartFile[] files, HttpServletRequest request) {
         try {
             ApiResult apiResult = ApiResult.success();
+            String bathpath = request.getContextPath();
+            apiResult.setData(lostinfoService.addLostinfo(lostinfo,files,bathpath));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");
@@ -45,9 +54,10 @@ public class LostinfoController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public ApiResult deleteLostinfo(String id) {
+    public ApiResult deleteLostinfo(IdRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
+            apiResult.setData(lostinfoService.deleteLostinfo(idRequest));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");
@@ -60,9 +70,10 @@ public class LostinfoController {
      */
     @RequestMapping("/query")
     @ResponseBody
-    public ApiResult queryLostinfo(String id) {
+    public ApiResult queryLostinfo(IdQueryRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
+            apiResult.setData(lostinfoService.queryLostinfo(idRequest));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");

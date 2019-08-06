@@ -4,12 +4,16 @@ package com.xihua.weixiao.controller;
 import com.xihua.weixiao.entity.Review;
 import com.xihua.weixiao.entity.Suggestion;
 import com.xihua.weixiao.result.ApiResult;
+import com.xihua.weixiao.service.ReviewService;
+import com.xihua.weixiao.vo.request.IdQueryRequest;
+import com.xihua.weixiao.vo.request.IdRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -23,6 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/review")
 public class ReviewController {
+    @Resource
+    private ReviewService reviewService;
+
     /**
      * @Description : 增加回复
      * @Author: ygh
@@ -45,22 +52,23 @@ public class ReviewController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public ApiResult deleteReview(Review review) {
+    public ApiResult deleteReview(IdRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
+            apiResult.setData(reviewService.deleteById(idRequest.getId()));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");
         }
     }
     /**
-     * @Description : 删除回复
+     * @Description : 查询回复
      * @Author: ygh
      * @Date: 2019/7/31 22:00
      */
     @RequestMapping("/query")
     @ResponseBody
-    public ApiResult queryReviewInComment(Review review) {
+    public ApiResult queryReviewInComment(IdQueryRequest request) {
         try {
             ApiResult apiResult = ApiResult.success();
             return apiResult;
