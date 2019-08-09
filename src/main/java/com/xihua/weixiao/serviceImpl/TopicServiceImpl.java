@@ -5,11 +5,13 @@ import com.xihua.weixiao.entity.Topic;
 import com.xihua.weixiao.dao.TopicMapper;
 import com.xihua.weixiao.service.TopicService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.xihua.weixiao.utils.FileUtils;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.TopicRequest;
 import com.xihua.weixiao.vo.response.TopicResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +36,8 @@ import java.util.UUID;
 public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements TopicService {
     @Value("server.url")
     private String serverUrl;
-
+    @Autowired
+    private FileUtils fileUtils;
     @Resource
     private TopicMapper mapper;
     private static final Logger LOGGER = LoggerFactory.getLogger(TopicServiceImpl.class);
@@ -50,26 +53,8 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
         topic.setTopicComment(0);
         topic.setTopicContent(topicRequest.getTopicContent());
         topic.setTopicCreateTime(System.currentTimeMillis());
-        //定义时间戳作为文件名的一部分吗，为了文件名不重复定义时间戳为文件名
-        String tFileName = "topic/"+new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
-        File dir = new File(filepath, tFileName);
-        String name = "";
-        if(!dir.exists()){
-            dir.mkdirs();
-        }
-        // MultipartFile自带的解析方法
-        for (MultipartFile multipartFile:files) {
-            File file = new File(filepath + "/" + tFileName + "/" + uuid + ".png");
-            try {
-                multipartFile.transferTo(file);
-            } catch (IOException e) {
-                LOGGER.info("转化文件失败",e);
-            }
-            name = name + serverUrl + tFileName + "/" + file.getName() + "*&";
-        }
-        if (!name.equals("")){
-            name = name.substring(0,name.length()-1);
-        }
+        String name = fileUtils.getUpUrl("topic/",files);
+        topic.setTopicImg(name);
         return mapper.insert(topic);
     }
 

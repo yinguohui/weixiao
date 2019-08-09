@@ -21,4 +21,6 @@ public interface UserService extends IService<User> {
     public ApiResult telRegister(LoginRequest request);
     //重置密码
     public ApiResult resetPassword(User user);
+    //修改用户个人信息
+    public ApiResult updateUserInfo(User user);
 }

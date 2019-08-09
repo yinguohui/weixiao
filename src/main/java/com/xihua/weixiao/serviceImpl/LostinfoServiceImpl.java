@@ -6,6 +6,7 @@ import com.xihua.weixiao.dao.LostinfoMapper;
 import com.xihua.weixiao.entity.Topic;
 import com.xihua.weixiao.service.LostinfoService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.xihua.weixiao.utils.FileUtils;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
 import org.slf4j.Logger;
@@ -35,6 +36,8 @@ public class LostinfoServiceImpl extends ServiceImpl<LostinfoMapper, Lostinfo> i
     @Value("server.url")
     private String serverUrl;
     @Resource
+    private FileUtils fileUtils;
+    @Resource
     private LostinfoMapper mapper;
     private static final Logger LOGGER = LoggerFactory.getLogger(LostinfoServiceImpl.class);
 
@@ -51,26 +54,8 @@ public class LostinfoServiceImpl extends ServiceImpl<LostinfoMapper, Lostinfo> i
         lostinfo1.setLostinfoUserId(lostinfo.getLostinfoUserId());
         lostinfo1.setLostinfoStatus(1);
         lostinfo1.setLostinfoDescription(lostinfo.getLostinfoDescription());
-        //定义时间戳作为文件名的一部分吗，为了文件名不重复定义时间戳为文件名
-        String tFileName = "lostinfo/"+new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
-        File dir = new File(filepath, tFileName);
-        String name = "";
-        if(!dir.exists()){
-            dir.mkdirs();
-        }
-        // MultipartFile自带的解析方法
-        for (MultipartFile multipartFile:files) {
-            File file = new File(filepath + "/" + tFileName + "/" + uuid + ".png");
-            try {
-                multipartFile.transferTo(file);
-            } catch (IOException e) {
-                LOGGER.info("转化文件失败",e);
-            }
-            name = name + serverUrl + tFileName + "/" + file.getName() + "*&";
-        }
-        if (!name.equals("")){
-            name = name.substring(0,name.length()-1);
-        }
+        String name = fileUtils.getUpUrl("lostinfo",files);
+        lostinfo1.setLostinfoImg(name);
         return mapper.insert(lostinfo1);
     }
 

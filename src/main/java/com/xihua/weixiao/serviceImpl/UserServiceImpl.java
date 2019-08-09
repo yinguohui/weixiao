@@ -46,7 +46,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     }
 
-    //注册
+    // 注册
     @Override
     public ApiResult telRegister(LoginRequest request) {
         User user = new User();
@@ -68,7 +68,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
     }
 
-    //忘记密码
+    // 忘记密码
     @Override
     public ApiResult resetPassword(User user) {
         User newuser = userMapper.selectByTel(user.getUserTel());
@@ -76,6 +76,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return ApiResult.failure("用户不存在");
         }
         if (userMapper.updatePassword(user)>0){
+            return ApiResult.success();
+        }
+        return ApiResult.failure("更新失败");
+    }
+
+    // 修改个人信息
+    @Override
+    public ApiResult updateUserInfo(User user) {
+        User newuser = userMapper.selectById(user.getUserId());
+        if (null==newuser){
+            return ApiResult.failure("用户不存在");
+        }
+        if (userMapper.updateById(user)>0){
             return ApiResult.success();
         }
         return ApiResult.failure("更新失败");
