@@ -6,9 +6,11 @@ import com.xihua.weixiao.dao.LostinfoMapper;
 import com.xihua.weixiao.entity.Topic;
 import com.xihua.weixiao.service.LostinfoService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.xihua.weixiao.utils.BeanPropertiesCopyUtils;
 import com.xihua.weixiao.utils.FileUtils;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.request.LostinfoRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,37 +35,34 @@ import java.util.UUID;
  */
 @Service
 public class LostinfoServiceImpl extends ServiceImpl<LostinfoMapper, Lostinfo> implements LostinfoService {
-    @Value("server.url")
-    private String serverUrl;
     @Resource
     private FileUtils fileUtils;
     @Resource
     private LostinfoMapper mapper;
     private static final Logger LOGGER = LoggerFactory.getLogger(LostinfoServiceImpl.class);
 
+    // 添加失物招领
     @Override
-    public int addLostinfo(Lostinfo lostinfo, MultipartFile[] files, String filepath) {
+    public int addLostinfo(LostinfoRequest lostinfo, MultipartFile[] files) {
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
         Lostinfo lostinfo1 = new Lostinfo();
+        BeanPropertiesCopyUtils.copyProperties(lostinfo1,lostinfo);
         lostinfo1.setLostinfoNo(uuid);
         lostinfo1.setLostinfoStatus(1);
-        lostinfo1.setLostinfoPlace(0);
-        lostinfo1.setLostinfoType(0);
-        lostinfo1.setLostinfoName(lostinfo.getLostinfoName());
         lostinfo1.setLostinfoCreateTime(System.currentTimeMillis());
-        lostinfo1.setLostinfoUserId(lostinfo.getLostinfoUserId());
         lostinfo1.setLostinfoStatus(1);
-        lostinfo1.setLostinfoDescription(lostinfo.getLostinfoDescription());
         String name = fileUtils.getUpUrl("lostinfo",files);
         lostinfo1.setLostinfoImg(name);
         return mapper.insert(lostinfo1);
     }
 
+    //删除失物招领
     @Override
     public int deleteLostinfo(IdRequest idRequest) {
         return mapper.deleteById(idRequest.getId());
     }
 
+    //查询失物招领
     @Override
     public List<Lostinfo> queryLostinfo(IdQueryRequest idRequest) {
         return mapper.queryLostinfo(idRequest);

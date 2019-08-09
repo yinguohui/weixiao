@@ -12,5 +12,20 @@
         <result column="review_create_time" property="reviewCreateTime" />
         <result column="review_status" property="reviewStatus" />
     </resultMap>
+    <resultMap id="responseReview" type="com.xihua.weixiao.vo.response.ReviewResponse">
+        <id column="review_id" property="reviewId" />
+        <result column="review_content" property="reviewContent" />
+        <result column="review_topic_id" property="reviewTopicId" />
+        <result column="review_user_id" property="reviewUserId" />
+        <result column="review_create_time" property="reviewCreateTime" />
+    </resultMap>
 
+
+    <select id="queryReviewByTopicId" resultMap="responseReview">
+        select review_id,review_content,review_topic_id,review_user_id,review_create_time
+        from review where review_topic_id = #{id}
+    </select>
+    <delete id="deleteReviewByTopicId">
+        delete from review where review_topic_id = #{id}
+    </delete>
 </mapper>

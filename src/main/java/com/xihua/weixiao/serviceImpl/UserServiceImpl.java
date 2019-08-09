@@ -5,6 +5,8 @@ import com.xihua.weixiao.dao.UserMapper;
 import com.xihua.weixiao.result.ApiResult;
 import com.xihua.weixiao.service.UserService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.xihua.weixiao.vo.request.IdQueryRequest;
+import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.LoginRequest;
 import com.xihua.weixiao.vo.response.IdrResponse;
 import org.slf4j.Logger;
@@ -93,4 +95,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         return ApiResult.failure("更新失败");
     }
+    // 查询个人信息
+    public ApiResult queryUserInfoById(IdRequest idRequest) {
+        User newuser = userMapper.selectById(idRequest.getId());
+        if (null==newuser){
+            return ApiResult.failure("用户不存在");
+        }
+        return ApiResult.success(newuser);
+    }
+
 }

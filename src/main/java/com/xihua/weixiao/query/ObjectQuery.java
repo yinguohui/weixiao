@@ -16,6 +16,9 @@ public class ObjectQuery {
   /** 当前页页码 */
   private int currentPage = Constants.DEFAULT_PAGE;
 
+  /** 当前页页码 */
+  private Integer pageOffset ;
+
   public int getPageSize() {
     return pageSize;
   }

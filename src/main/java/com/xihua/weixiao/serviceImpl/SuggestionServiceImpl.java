@@ -3,10 +3,12 @@ package com.xihua.weixiao.serviceImpl;
 import com.xihua.weixiao.entity.Lostinfo;
 import com.xihua.weixiao.entity.Suggestion;
 import com.xihua.weixiao.dao.SuggestionMapper;
+import com.xihua.weixiao.query.SuggestionQuery;
 import com.xihua.weixiao.service.SuggestionService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xihua.weixiao.utils.FileUtils;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
+import com.xihua.weixiao.vo.request.IdRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,12 +39,13 @@ public class SuggestionServiceImpl extends ServiceImpl<SuggestionMapper, Suggest
     private SuggestionMapper mapper;
     private static final Logger LOGGER = LoggerFactory.getLogger(SuggestionServiceImpl.class);
 
-
+    // 通过用户Id查询所有反馈
     @Override
-    public List<Suggestion> getSuggestionByMyId(IdQueryRequest request) {
-        return mapper.getSuggestionByMyId(request);
+    public List<Suggestion> getSuggestionByMyId(SuggestionQuery query) {
+        return mapper.getSuggestionByMyId(query);
     }
 
+    // 增加反馈意见
     @Override
     public int addSuggestion(Suggestion suggestion, MultipartFile[] files) {
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
@@ -56,4 +59,11 @@ public class SuggestionServiceImpl extends ServiceImpl<SuggestionMapper, Suggest
         suggestion1.setSuggestionImg(name);
         return mapper.insert(suggestion1);
     }
+
+    //通过ID删除反馈意见
+    public int deledeSuggestionById(IdRequest idRequest){
+        return mapper.deleteById(idRequest.getId());
+    }
+
+    //查询所有用户意见
 }

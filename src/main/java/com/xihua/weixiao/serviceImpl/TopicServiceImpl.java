@@ -34,14 +34,14 @@ import java.util.UUID;
  */
 @Service
 public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements TopicService {
-    @Value("server.url")
-    private String serverUrl;
+
     @Autowired
     private FileUtils fileUtils;
     @Resource
     private TopicMapper mapper;
     private static final Logger LOGGER = LoggerFactory.getLogger(TopicServiceImpl.class);
 
+    // 发表主题
     @Override
     public Integer addTopic(TopicRequest topicRequest, MultipartFile[] files,String filepath){
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
@@ -58,22 +58,26 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
         return mapper.insert(topic);
     }
 
+    // 通过Id删除主题
     @Override
     public Integer deleteTopicById(IdRequest request) {
         return mapper.deleteById(request.getId());
     }
 
+    // 查询所有主题
     @Override
     public List<Topic> queryTopicAll(Page page) {
         page.setEnd(page.getStart()+10);
         return mapper.queryTopicAll(page);
     }
 
+    // 通过Id获得主题
     @Override
     public TopicResponse getTopicById(IdRequest idRequest) {
         return mapper.queryTopicResponse(idRequest);
     }
 
+    // 得到我的主题
     @Override
     public List<Topic> getTopicByMe(IdRequest idRequest) {
         return mapper.queryMineTopic(idRequest);
