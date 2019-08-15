@@ -3,11 +3,14 @@ package com.xihua.weixiao.controller;
 
 import com.xihua.weixiao.entity.Chat;
 import com.xihua.weixiao.result.ApiResult;
+import com.xihua.weixiao.service.MessageService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -20,6 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/message")
 public class MessageController {
+    @Resource
+    private MessageService service;
+
     /**
      * @Description : 增加一条聊天记录
      * @Author: ygh
@@ -30,6 +36,7 @@ public class MessageController {
     public ApiResult addChat(Chat donation) {
         try {
             ApiResult apiResult = ApiResult.success();
+            service.addMessage();
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");

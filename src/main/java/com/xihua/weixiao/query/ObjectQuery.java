@@ -11,10 +11,10 @@ import java.util.List;
  */
 public class ObjectQuery {
   /** 每页显示记录数 */
-  private int pageSize = Constants.DEFAULT_PAGESIZE;
+  private int pageSize = 10;
 
   /** 当前页页码 */
-  private int currentPage = Constants.DEFAULT_PAGE;
+  private int currentPage = 1;
 
   /** 当前页页码 */
   private Integer pageOffset ;
@@ -36,6 +36,9 @@ public class ObjectQuery {
   }
 
   public int getPageOffset() {
-    return (currentPage - 1) * pageSize;
+    return pageOffset;
+  }
+  public void setPageOffset(int pageOffset) {
+    this.pageOffset = pageOffset;
   }
 }

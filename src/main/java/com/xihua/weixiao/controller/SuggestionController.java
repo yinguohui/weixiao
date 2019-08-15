@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,6 @@ public class SuggestionController {
     @Autowired
     private SuggestionService service;
     private static final Logger LOGGER = LoggerFactory.getLogger(SuggestionController.class);
-
     /**
      * @Description : 查询自己的反馈
      * @Author: ygh
@@ -44,13 +44,13 @@ public class SuggestionController {
      */
     @RequestMapping("/querymyid")
     @ResponseBody
-    public ApiResult getSuggestionByMyId(IdQueryRequest request) {
+    public ApiResult getSuggestionByMyId(@RequestBody IdRequest request) {
         try {
             ApiResult apiResult = ApiResult.success();
             apiResult.setData(service.getSuggestionByMyId(request));
             return apiResult;
         } catch (Exception e) {
-            LOGGER.info("提交意见失败",e);
+            LOGGER.info("查询意见失败",e);
             return ApiResult.failure("");
         }
     }
@@ -64,7 +64,6 @@ public class SuggestionController {
     public ApiResult addSuggestion(Suggestion suggestion, MultipartFile [] files) {
         try {
             ApiResult apiResult = ApiResult.success();
-            int s = files.length;
             apiResult.setData(service.addSuggestion(suggestion,files));
             return apiResult;
         } catch (Exception e) {
@@ -94,7 +93,7 @@ public class SuggestionController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public ApiResult deleteSuggestionById(IdRequest idRequest) {
+    public ApiResult deleteSuggestionById(@RequestBody IdRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
             apiResult.setData(service.deleteById(idRequest.getId()));
@@ -113,6 +112,22 @@ public class SuggestionController {
     public ApiResult queryAllSuggestion(Suggestion topic) {
         try {
             ApiResult apiResult = ApiResult.success();
+            return apiResult;
+        } catch (Exception e) {
+            return ApiResult.failure("");
+        }
+    }
+    /**
+     * @Description :
+     * @Author: ygh
+     * @Date: 2019/8/12 16:42
+     */
+    @RequestMapping("/quarytimesuggestion")
+    @ResponseBody
+    public ApiResult getSuggestionByTimeLine(@RequestBody IdRequest idRequest) {
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(service.getSuggestionTimeLineByMyId(idRequest));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");

@@ -41,6 +41,11 @@ public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review> impleme
         return mapper.insert(review);
     }
 
+    @Override
+    public List<ReviewResponse> queryByTopicId(IdRequest request) {
+        return mapper.queryByTopicId(request);
+    }
+
     //删除评论
     public int deleteReview(IdRequest idRequest){
         return mapper.deleteById(idRequest.getId());

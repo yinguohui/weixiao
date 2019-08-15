@@ -27,7 +27,19 @@
         <result column="goods_type" property="goodsType" />
         <result column="goods_desciption" property="goodsDesciption" />
     </resultMap>
+
+    <resultMap id="GoodsTimeLine" type="com.xihua.weixiao.vo.response.GoodsTimeLine">
+        <id column="goods_id" property="goodsId" />
+        <result column="goods_name" property="goodsName" />
+        <result column="goods_create_time" property="goodsCreateTime" />
+    </resultMap>
     <select id="getGoods" resultMap="GoodsResponse">
-        SELECT * FROM goods limit #{current},#{size}
+        SELECT * FROM goods limit #{pageOffset} ,#{pageSize}
+    </select>
+    <select id="selectByKsy" resultMap="GoodsResponse">
+        SELECT * FROM goods where goods_name like #{key}
+    </select>
+    <select id="getGoodsTimeLine" resultMap="GoodsTimeLine">
+        SELECT * FROM goods where goods_user_no = #{id}
     </select>
 </mapper>

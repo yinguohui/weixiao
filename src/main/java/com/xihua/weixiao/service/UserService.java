@@ -3,8 +3,11 @@ package com.xihua.weixiao.service;
 import com.xihua.weixiao.entity.User;
 import com.baomidou.mybatisplus.service.IService;
 import com.xihua.weixiao.result.ApiResult;
+import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.LoginRequest;
+import com.xihua.weixiao.vo.request.UserRequest;
 import com.xihua.weixiao.vo.response.IdrResponse;
+import com.xihua.weixiao.vo.response.UserResponse;
 
 /**
  * <p>
@@ -20,7 +23,9 @@ public interface UserService extends IService<User> {
     //注册
     public ApiResult telRegister(LoginRequest request);
     //重置密码
-    public ApiResult resetPassword(User user);
+    public ApiResult resetPassword(LoginRequest user);
     //修改用户个人信息
-    public ApiResult updateUserInfo(User user);
+    public int updateUserInfo(UserRequest user);
+
+    public UserResponse getUserInfoById(IdRequest idRequest);
 }

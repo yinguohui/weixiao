@@ -1,13 +1,20 @@
 package com.xihua.weixiao.controller;
 
 
+import com.xihua.weixiao.dao.LikeDetailMapper;
 import com.xihua.weixiao.entity.Chat;
 import com.xihua.weixiao.entity.LikeDetail;
 import com.xihua.weixiao.result.ApiResult;
+import com.xihua.weixiao.service.LikeDetailService;
+import com.xihua.weixiao.utils.BeanPropertiesCopyUtils;
+import com.xihua.weixiao.vo.request.LikeDetailRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.UUID;
 
 /**
  * <p>
@@ -20,6 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/likeDetail")
 public class LikeDetailController {
+    @Resource
+    private LikeDetailService service;
+
     /**
      * @Description : 增加点赞
      * @Author: ygh
@@ -27,9 +37,16 @@ public class LikeDetailController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public ApiResult addLikeDetail(LikeDetail likeDetail) {
+    public ApiResult addLikeDetail(LikeDetailRequest likeDetailRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");
+            LikeDetail likeDetail = new LikeDetail();
+            BeanPropertiesCopyUtils.copyProperties(likeDetail,likeDetailRequest);
+            likeDetail.setLikedetailNo(uuid);
+            likeDetail.setLikedetailStatus(1);
+            likeDetail.setLikedetailCreateTime(System.currentTimeMillis());
+            service.insert(likeDetail);
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");

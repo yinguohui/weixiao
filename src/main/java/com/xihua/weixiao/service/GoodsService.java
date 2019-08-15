@@ -2,16 +2,19 @@ package com.xihua.weixiao.service;
 
 import com.xihua.weixiao.entity.Goods;
 import com.baomidou.mybatisplus.service.IService;
-import com.xihua.weixiao.result.ApiResult;
-import com.xihua.weixiao.vo.request.GoodsRequestBean;
+import com.xihua.weixiao.query.GoodsQuery;
+import com.xihua.weixiao.query.PageResult;
+import com.xihua.weixiao.vo.request.GoodsRequest;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
+import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.response.GoodsResponse;
 import com.xihua.weixiao.vo.response.GoodsResponseBean;
-import org.apache.ibatis.session.RowBounds;
+import com.xihua.weixiao.vo.response.GoodsTimeLine;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,15 +30,18 @@ public interface GoodsService extends IService<Goods> {
      * @Author: ygh
      * @Date: 2019/7/30 20:16
      */
-    public  int addGoods(GoodsRequestBean goods, MultipartFile[] files) throws IOException;
+    public  int addGoods(GoodsRequest goods, MultipartFile[] files) throws IOException;
     
     /**
      * @Description : 按条件查询
      * @Author: ygh
      * @Date: 2019/7/30 20:19
      */
-    public List<GoodsResponse> getGoods(IdQueryRequest idQueryRequest);
+    public PageResult<GoodsResponse> getGoods(GoodsQuery goodsQuery);
 
     public GoodsResponseBean getGoodsDetailInfo(int goodsId);
 
+    public List<GoodsResponse> queryGoodsByKey(String key);
+
+    public List<GoodsTimeLine> getGoodsTimeLine(IdRequest idRequest);
 }

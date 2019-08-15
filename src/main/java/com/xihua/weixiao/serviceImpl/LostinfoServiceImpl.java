@@ -11,6 +11,7 @@ import com.xihua.weixiao.utils.FileUtils;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.LostinfoRequest;
+import com.xihua.weixiao.vo.response.LostFoundTimeLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,8 +51,7 @@ public class LostinfoServiceImpl extends ServiceImpl<LostinfoMapper, Lostinfo> i
         lostinfo1.setLostinfoNo(uuid);
         lostinfo1.setLostinfoStatus(1);
         lostinfo1.setLostinfoCreateTime(System.currentTimeMillis());
-        lostinfo1.setLostinfoStatus(1);
-        String name = fileUtils.getUpUrl("lostinfo",files);
+        String name = fileUtils.getUpUrl("lostinfo/",files);
         lostinfo1.setLostinfoImg(name);
         return mapper.insert(lostinfo1);
     }
@@ -66,5 +66,10 @@ public class LostinfoServiceImpl extends ServiceImpl<LostinfoMapper, Lostinfo> i
     @Override
     public List<Lostinfo> queryLostinfo(IdQueryRequest idRequest) {
         return mapper.queryLostinfo(idRequest);
+    }
+
+    @Override
+    public List<LostFoundTimeLine> getDonationTimeLineByMyId(IdRequest idRequest) {
+        return mapper.getDonationTimeLineByMyId(idRequest);
     }
 }

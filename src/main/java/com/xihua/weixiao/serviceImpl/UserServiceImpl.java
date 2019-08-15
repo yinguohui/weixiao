@@ -5,10 +5,13 @@ import com.xihua.weixiao.dao.UserMapper;
 import com.xihua.weixiao.result.ApiResult;
 import com.xihua.weixiao.service.UserService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.xihua.weixiao.utils.BeanPropertiesCopyUtils;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.LoginRequest;
+import com.xihua.weixiao.vo.request.UserRequest;
 import com.xihua.weixiao.vo.response.IdrResponse;
+import com.xihua.weixiao.vo.response.UserResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -72,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 忘记密码
     @Override
-    public ApiResult resetPassword(User user) {
+    public ApiResult resetPassword(LoginRequest user) {
         User newuser = userMapper.selectByTel(user.getUserTel());
         if (null==newuser){
             return ApiResult.failure("用户不存在");
@@ -85,16 +88,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 修改个人信息
     @Override
-    public ApiResult updateUserInfo(User user) {
-        User newuser = userMapper.selectById(user.getUserId());
-        if (null==newuser){
-            return ApiResult.failure("用户不存在");
-        }
-        if (userMapper.updateById(user)>0){
-            return ApiResult.success();
-        }
-        return ApiResult.failure("更新失败");
+    public int updateUserInfo(UserRequest user) {
+        User user1 = new User();
+        BeanPropertiesCopyUtils.copyProperties(user1,user);
+       return userMapper.updateById(user1);
     }
+
+    @Override
+    public UserResponse getUserInfoById(IdRequest idRequest) {
+        UserResponse response = new UserResponse();
+        BeanPropertiesCopyUtils.copyProperties(response,userMapper.selectById(idRequest.getId()));
+        return response;
+    }
+
     // 查询个人信息
     public ApiResult queryUserInfoById(IdRequest idRequest) {
         User newuser = userMapper.selectById(idRequest.getId());

@@ -2,25 +2,25 @@ package com.xihua.weixiao.serviceImpl;
 
 import com.xihua.weixiao.entity.Goods;
 import com.xihua.weixiao.dao.GoodsMapper;
-import com.xihua.weixiao.result.ApiResult;
+import com.xihua.weixiao.query.GoodsQuery;
+import com.xihua.weixiao.query.PageResult;
 import com.xihua.weixiao.service.GoodsService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xihua.weixiao.utils.FileUtils;
-import com.xihua.weixiao.vo.request.GoodsRequestBean;
+import com.xihua.weixiao.vo.request.GoodsRequest;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
+import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.response.GoodsResponse;
 import com.xihua.weixiao.vo.response.GoodsResponseBean;
-import org.apache.ibatis.session.RowBounds;
+import com.xihua.weixiao.vo.response.GoodsTimeLine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -38,7 +38,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Resource
     private GoodsMapper goodsMapper;
     @Override
-    public int addGoods(GoodsRequestBean goods, MultipartFile[] files) throws IOException {
+    public int addGoods(GoodsRequest goods, MultipartFile[] files) throws IOException {
         String uuid= UUID.randomUUID().toString().replaceAll("-","");
         Goods goods1 = new Goods();
         goods1.setGoodsNo(uuid);
@@ -49,15 +49,19 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         goods1.setGoodsType(goods.getGoodsType());
         goods1.setGoodsPrice(goods.getGoodsPrice());
         goods1.setGoodsName(goods.getGoodsName());
-        String name = fileUtils.getUpUrl("goods",files);
+        String name = fileUtils.getUpUrl("goods/",files);
         goods1.setGoodsImg(name);
         return goodsMapper.insert(goods1);
     }
 
     @Override
-    public List<GoodsResponse> getGoods(IdQueryRequest idQueryRequest) {
-        System.out.println(goodsMapper.getGoods(idQueryRequest));
-        return goodsMapper.getGoods(idQueryRequest);
+    public PageResult<GoodsResponse> getGoods(GoodsQuery goodsQuery) {
+        PageResult pageResult = new PageResult();
+        pageResult.setCurrentPage(goodsQuery.getCurrentPage());
+        pageResult.setPageSize(goodsQuery.getPageSize());
+        goodsQuery.setPageOffset((goodsQuery.getCurrentPage()-1)*goodsQuery.getPageSize());
+        pageResult.setItems(goodsMapper.getGoods(goodsQuery));
+        return pageResult;
     }
 
 
@@ -65,5 +69,17 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Override
     public GoodsResponseBean getGoodsDetailInfo(int goodsId) {
         return null;
+    }
+
+    @Override
+    public List<GoodsResponse> queryGoodsByKey(String key) {
+        key = "%"+key+"%";
+        List<GoodsResponse> list = goodsMapper.selectByKsy(key);
+        return list;
+    }
+
+    @Override
+    public List<GoodsTimeLine> getGoodsTimeLine(IdRequest idRequest) {
+        return goodsMapper.getGoodsTimeLine(idRequest);
     }
 }

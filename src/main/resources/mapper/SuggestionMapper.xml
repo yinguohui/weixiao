@@ -12,7 +12,24 @@
         <result column="suggestion_create_time" property="suggestionCreateTime" />
         <result column="suggestion_status" property="suggestionStatus" />
     </resultMap>
-    <select id="getSuggestionByMyId">
-         SELECT * FROM suggestion WHERE suggestion_user_id = #{id} limit #{current} ,#{size}
+    <resultMap id="Response" type="com.xihua.weixiao.vo.response.SuggestionResponse">
+        <id column="suggestion_id" property="suggestionId" />
+        <result column="suggestion_content" property="suggestionContent" />
+        <result column="suggestion_img" property="suggestionImg" />
+        <result column="suggestion_user_id" property="suggestionUserId" />
+        <result column="suggestion_create_time" property="suggestionCreateTime" />
+        <result column="suggestion_status" property="suggestionStatus" />
+    </resultMap>
+    <resultMap id="ResponseTimeLine" type="com.xihua.weixiao.vo.response.SuggestionTimeLine">
+        <id column="suggestion_id" property="suggestionId" />
+        <result column="suggestion_content" property="suggestionContent" />
+        <result column="suggestion_create_time" property="suggestionCreateTime" />
+    </resultMap>
+    <select id="getSuggestionByMyId" resultMap="Response">
+         SELECT * FROM suggestion WHERE suggestion_user_id = #{id}
+    </select>
+
+    <select id="getSuggestionTimeLineByMyId" resultMap="ResponseTimeLine">
+         SELECT * FROM suggestion WHERE suggestion_user_id = #{id}
     </select>
 </mapper>

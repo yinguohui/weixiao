@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface MessageService extends IService<Message> {
 
+    public void addMessage();
 }

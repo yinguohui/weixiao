@@ -43,7 +43,7 @@ public class FileUtils {
             } catch (IOException e) {
                 LOGGER.info("转化文件失败",e);
             }
-            name = name + serverUrl + type + "\\" + file.getName() + "*%";
+            name = name + serverUrl + type + file.getName() + "$%";
         }
         if (!name.equals("")){
             name = name.substring(0,name.length()-2);

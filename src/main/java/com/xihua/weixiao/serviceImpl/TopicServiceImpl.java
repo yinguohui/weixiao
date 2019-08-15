@@ -1,26 +1,25 @@
 package com.xihua.weixiao.serviceImpl;
 
-import com.xihua.weixiao.entity.Page;
+import com.xihua.weixiao.dao.CommentDetailMapper;
+import com.xihua.weixiao.dao.LikeDetailMapper;
 import com.xihua.weixiao.entity.Topic;
 import com.xihua.weixiao.dao.TopicMapper;
+import com.xihua.weixiao.query.TopicQuery;
 import com.xihua.weixiao.service.TopicService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xihua.weixiao.utils.FileUtils;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.TopicRequest;
+import com.xihua.weixiao.vo.response.TopicDetailResponse;
+import com.xihua.weixiao.vo.response.TopicTimeLine;
 import com.xihua.weixiao.vo.response.TopicResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +38,11 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
     private FileUtils fileUtils;
     @Resource
     private TopicMapper mapper;
+    @Resource
+    private LikeDetailMapper likeDetailMapper;
+    @Resource
+    private CommentDetailMapper commentDetailMapper;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(TopicServiceImpl.class);
 
     // 发表主题
@@ -61,26 +65,38 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
     // 通过Id删除主题
     @Override
     public Integer deleteTopicById(IdRequest request) {
+        likeDetailMapper.deleteLikeDetailByTopicId(request);
+        commentDetailMapper.deleteCommentDetailByTopicId(request);
         return mapper.deleteById(request.getId());
     }
 
     // 查询所有主题
     @Override
-    public List<Topic> queryTopicAll(Page page) {
-        page.setEnd(page.getStart()+10);
-        return mapper.queryTopicAll(page);
+    public List<TopicResponse> queryTopicAll(TopicQuery query) {
+        query.setPageOffset((query.getCurrentPage()-1)*query.getPageSize());
+        return mapper.queryTopicAll(query);
     }
 
     // 通过Id获得主题
     @Override
-    public TopicResponse getTopicById(IdRequest idRequest) {
-        return mapper.queryTopicResponse(idRequest);
+    public TopicDetailResponse getTopicById(IdRequest idRequest) {
+        return mapper.getTopicById(idRequest);
     }
 
     // 得到我的主题
     @Override
     public List<Topic> getTopicByMe(IdRequest idRequest) {
         return mapper.queryMineTopic(idRequest);
+    }
+
+    @Override
+    public List<TopicTimeLine> quaryTimeTopic(IdRequest idRequest) {
+        return mapper.quaryTimeTopic(idRequest);
+    }
+
+    @Override
+    public List<TopicResponse> queryMyTopicAll(IdRequest idRequest) {
+        return null;
     }
 
 }

@@ -1,21 +1,20 @@
 package com.xihua.weixiao.controller;
 
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.xihua.weixiao.query.GoodsQuery;
 import com.xihua.weixiao.result.ApiResult;
 import com.xihua.weixiao.service.GoodsService;
-import com.xihua.weixiao.vo.request.GoodsRequestBean;
-import com.xihua.weixiao.vo.request.IdQueryRequest;
+import com.xihua.weixiao.vo.request.GoodsRequest;
+import com.xihua.weixiao.vo.request.IdRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -39,7 +38,7 @@ public class GoodsController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public ApiResult addSellGoods(GoodsRequestBean bean, MultipartFile[] files){
+    public ApiResult addSellGoods(GoodsRequest bean, MultipartFile[] files){
         try {
             ApiResult apiResult = ApiResult.success();
             apiResult.setData(goodsService.addGoods(bean,files));
@@ -54,16 +53,49 @@ public class GoodsController {
      * @Author: ygh
      * @Date: 2019/7/30 21:49
      */
-    @RequestMapping("/queryAll")
+    @RequestMapping(value = "/queryAll")
     @ResponseBody
-    public ApiResult querySellGoods(IdQueryRequest idQueryRequest){
+    public ApiResult querySellGoods(@RequestBody GoodsQuery query){
         try {
             ApiResult apiResult = ApiResult.success();
-            apiResult.setData(goodsService.getGoods(idQueryRequest));
+            apiResult.setData(goodsService.getGoods(query));
             return apiResult;
         }catch (Exception e){
             LOGGER.info("出售物品失败",e);
             return ApiResult.failure("出售物品失败");
+        }
+    }
+    /**
+     * @Description : 学生出售物品
+     * @Author: ygh
+     * @Date: 2019/7/30 21:49
+     */
+    @RequestMapping(value = "/queryByKey")
+    @ResponseBody
+    public ApiResult querySellGoods(String key){
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(goodsService.queryGoodsByKey(key));
+            return apiResult;
+        }catch (Exception e){
+            LOGGER.info("出售物品失败",e);
+            return ApiResult.failure("出售物品失败");
+        }
+    }
+    /**
+     * @Description : 查询自己捐赠的物品
+     * @Author: ygh
+     * @Date: 2019/7/30 23:12
+     */
+    @RequestMapping("/quarytimegoods")
+    @ResponseBody
+    public ApiResult getGoodsTimeLine(@RequestBody IdRequest idRequest) {
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(goodsService.getGoodsTimeLine(idRequest));
+            return apiResult;
+        } catch (Exception e) {
+            return ApiResult.failure("");
         }
     }
 }

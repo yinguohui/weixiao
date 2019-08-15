@@ -19,7 +19,7 @@ public class Donation implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId("donation_id")
-    private Integer donationId;
+    private int donationId;
     @TableField("donation_no")
     private String donationNo;
     @TableField("donation_name")
@@ -40,11 +40,11 @@ public class Donation implements Serializable {
     private Long donationCreateTime;
 
 
-    public Integer getDonationId() {
+    public int getDonationId() {
         return donationId;
     }
 
-    public void setDonationId(Integer donationId) {
+    public void setDonationId(int donationId) {
         this.donationId = donationId;
     }
 

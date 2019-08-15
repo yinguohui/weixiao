@@ -7,6 +7,7 @@ import com.xihua.weixiao.result.ApiResult;
 import com.xihua.weixiao.service.ReviewService;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -71,6 +72,22 @@ public class ReviewController {
     public ApiResult queryReviewInComment(IdQueryRequest request) {
         try {
             ApiResult apiResult = ApiResult.success();
+            return apiResult;
+        } catch (Exception e) {
+            return ApiResult.failure("");
+        }
+    }
+    /**
+     * @Description : 查询回复
+     * @Author: ygh
+     * @Date: 2019/7/31 22:00
+     */
+    @RequestMapping("/querybytopicdd")
+    @ResponseBody
+    public ApiResult queryReviewInComment(@RequestBody IdRequest request) {
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(reviewService.queryByTopicId(request));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");

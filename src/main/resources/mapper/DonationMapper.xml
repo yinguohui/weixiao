@@ -15,5 +15,14 @@
         <result column="donation_user_id" property="donationUserId" />
         <result column="donation_create_time" property="donationCreateTime" />
     </resultMap>
+    <resultMap id="ResponseTimeLime" type="com.xihua.weixiao.vo.response.DonationTimeLine">
+        <id column="donation_id" property="donationId" />
+        <result column="donation_name" property="donationName" />
+        <result column="donation_create_time" property="donationCreateTime" />
+    </resultMap>
+
+    <select id="getDonationTimeLine" resultMap="ResponseTimeLime">
+        select * from donation where donation_user_id = #{id}
+    </select>
 
 </mapper>

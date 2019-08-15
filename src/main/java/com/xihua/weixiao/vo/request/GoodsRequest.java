@@ -1,6 +1,6 @@
 package com.xihua.weixiao.vo.request;
 
-public class GoodsRequestBean {
+public class GoodsRequest {
     private String goodsName;
     private String goodsPlace;
     private String goodsDesciption;

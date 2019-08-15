@@ -3,7 +3,7 @@ package com.xihua.weixiao.vo.request;
 public class LostinfoRequest {
     private String lostinfoName;
     private String lostinfoDescription;
-    private Integer lostinfoPlace;
+    private String lostinfoPlace;
     private Integer lostinfoType;
     private Integer lostinfoUserId;
 
@@ -23,11 +23,11 @@ public class LostinfoRequest {
         this.lostinfoDescription = lostinfoDescription;
     }
 
-    public Integer getLostinfoPlace() {
+    public String getLostinfoPlace() {
         return lostinfoPlace;
     }
 
-    public void setLostinfoPlace(Integer lostinfoPlace) {
+    public void setLostinfoPlace(String lostinfoPlace) {
         this.lostinfoPlace = lostinfoPlace;
     }
 

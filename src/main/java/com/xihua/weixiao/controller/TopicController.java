@@ -4,6 +4,7 @@ package com.xihua.weixiao.controller;
 import com.xihua.weixiao.entity.Donation;
 import com.xihua.weixiao.entity.Page;
 import com.xihua.weixiao.entity.Topic;
+import com.xihua.weixiao.query.TopicQuery;
 import com.xihua.weixiao.result.ApiResult;
 import com.xihua.weixiao.service.TopicService;
 import com.xihua.weixiao.vo.request.IdRequest;
@@ -11,6 +12,7 @@ import com.xihua.weixiao.vo.request.TopicRequest;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -60,10 +62,10 @@ public class TopicController {
      */
     @RequestMapping("/getTopicById")
     @ResponseBody
-    public ApiResult getTopicById(IdRequest idRequest) {
+    public ApiResult getTopicById(@RequestBody IdRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
-            apiResult.setData(idRequest);
+            apiResult.setData(topicService.getTopicById(idRequest));
             return apiResult;
         } catch (Exception e) {
             LOGGER.info("",e);
@@ -113,10 +115,28 @@ public class TopicController {
      */
     @RequestMapping("/quaryAllTopic")
     @ResponseBody
-    public ApiResult queryTopicAll(Page page) {
+    public ApiResult queryTopicAll(TopicQuery query) {
         try {
             ApiResult apiResult = ApiResult.success();
-            apiResult.setData(topicService.queryTopicAll(page));
+            apiResult.setData(topicService.queryTopicAll(query));
+            return apiResult;
+        } catch (Exception e) {
+            LOGGER.info("",e);
+            return ApiResult.failure("");
+        }
+    }
+
+    /**
+     * @Description : 查看我的发布主题时间线
+     * @Author: ygh
+     * @Date: 2019/7/30 23:14
+     */
+    @RequestMapping("/quaryTimeTopic")
+    @ResponseBody
+    public ApiResult quaryTimeTopic(@RequestBody  IdRequest query) {
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(topicService.quaryTimeTopic(query));
             return apiResult;
         } catch (Exception e) {
             LOGGER.info("",e);

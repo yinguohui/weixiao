@@ -4,24 +4,88 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.xihua.weixiao.entity.Topic">
-        <id column="topic_id" property="topicId" />
-        <result column="topic_no" property="topicNo" />
-        <result column="topic_content" property="topicContent" />
-        <result column="topic_img" property="topicImg" />
-        <result column="topic_like" property="topicLike" />
-        <result column="topic_comment" property="topicComment" />
-        <result column="topic_create_time" property="topicCreateTime" />
-        <result column="topic_status" property="topicStatus" />
-        <result column="topic_user_id" property="topicUserId" />
+        <id column="topic_id" property="topicId"/>
+        <result column="topic_no" property="topicNo"/>
+        <result column="topic_content" property="topicContent"/>
+        <result column="topic_img" property="topicImg"/>
+        <result column="topic_like" property="topicLike"/>
+        <result column="topic_comment" property="topicComment"/>
+        <result column="topic_create_time" property="topicCreateTime"/>
+        <result column="topic_status" property="topicStatus"/>
+        <result column="topic_user_id" property="topicUserId"/>
     </resultMap>
 
-    <select id="queryTopicAll" resultType="com.xihua.weixiao.entity.Topic">
-        SELECT * FROM topic limit #{start} , #{end}
+    <resultMap id="Response" type="com.xihua.weixiao.vo.response.TopicResponse">
+        <id column="topic_id" property="topicId"/>
+        <result column="topic_content" property="topicContent"/>
+        <result column="topic_img" property="topicImg"/>
+        <result column="topic_like" property="topicLike"/>
+        <result column="topic_comment" property="topicComment"/>
+        <result column="topic_create_time" property="topicCreateTime"/>
+        <result column="topic_user_id" property="topicUserId"/>
+        <association property="user" javaType="com.xihua.weixiao.entity.User">
+            <id column="user_id" property="userId"/>
+            <result column="user_name" property="userName"/>
+            <result column="user_img" property="userImg"/>
+        </association>
+    </resultMap>
+    <resultMap id="TopicDetailResponse" type="com.xihua.weixiao.vo.response.TopicDetailResponse">
+        <id column="topic_id" property="topicId"/>
+        <result column="topic_content" property="topicContent"/>
+        <result column="topic_img" property="topicImg"/>
+        <result column="topic_like" property="topicLike"/>
+        <result column="topic_comment" property="topicComment"/>
+        <result column="topic_create_time" property="topicCreateTime"/>
+        <result column="topic_user_id" property="topicUserId"/>
+        <association property="user" javaType="com.xihua.weixiao.entity.User">
+            <id column="user_id" property="userId"/>
+            <result column="user_name" property="userName"/>
+            <result column="user_img" property="userImg"/>
+        </association>
+        <collection property="review" ofType="com.xihua.weixiao.entity.Review">
+            <id column="review_id" property="reviewId"/>
+            <result column="review_content" property="reviewContent"/>
+            <result column="review_topic_id" property="reviewTopicId"/>
+            <result column="review_user_id" property="reviewUserId"/>
+            <result column="review_create_time" property="reviewCreateTime"/>
+        </collection>
+        <collection property="likeDetail" ofType="com.xihua.weixiao.entity.LikeDetail">
+            <result column="likedetail_user_id" property="likedetailUserId" />
+            <result column="likedetail_topic_id" property="likedetailTopicId" />
+            <result column="likedetail_status" property="likedetailStatus" />
+            <result column="likedetail_create_time" property="likedetailCreateTime" />
+        </collection>
+    </resultMap>
+
+    <resultMap id="TopicTimeLine" type="com.xihua.weixiao.vo.response.TopicTimeLine">
+        <id column="topic_id" property="topicId"/>
+        <result column="topic_content" property="topicContent"/>
+        <result column="topic_create_time" property="topicCreateTime"/>
+    </resultMap>
+
+    <select id="queryTopicAll" resultMap="Response">
+        SELECT topic.* ,u.user_name,u.user_img  FROM topic,user u where u.user_id=topic.topic_user_id limit #{pageOffset} , #{pageSize}
     </select>
     <select id="queryTopicResponse" resultType="com.xihua.weixiao.vo.response.TopicResponse">
         SELECT * FROM topic WHERE topic_id = #{id}
     </select>
     <select id="queryMineTopic" resultType="com.xihua.weixiao.entity.Topic">
         SELECT * FROM topic WHERE topic_user_id = #{id}
+    </select>
+    <select id="quaryTimeTopic" resultMap="TopicTimeLine">
+        SELECT topic.topic_id,topic.topic_content,topic.topic_create_time FROM topic WHERE topic_user_id = #{id}
+    </select>
+    <select id="getTopicById" resultMap="TopicDetailResponse">
+       select t.*,u.user_name,u.user_img,r.*,l.*
+       from topic t JOIN user u on t.topic_id = #{id}
+       and u.user_id = t.topic_user_id LEFT JOIN
+       review r on t.topic_id = r.review_topic_id
+        LEFT JOIN like_detail l on
+        l.likedetail_topic_id = t.topic_id
+    </select>
+    <select id="queryMyTopicAll" resultMap="Response">
+        SELECT topic.* ,u.user_name,u.user_img  FROM topic,user u where u.user_id=topic.topic_user_id
+         and u.user_id = #{id}
+         limit #{pageOffset} , #{pageSize}
     </select>
 </mapper>

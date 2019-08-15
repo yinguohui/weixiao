@@ -1,13 +1,12 @@
 package com.xihua.weixiao.vo.response;
 
+import com.xihua.weixiao.entity.LikeDetail;
+import com.xihua.weixiao.entity.Review;
 import com.xihua.weixiao.entity.User;
 
-/**
- * @ClassName TopicResponse
- * @Auhtor ygh
- * @DATE 2019/7/31 23:16
- **/
-public class TopicResponse {
+import java.util.List;
+
+public class TopicDetailResponse {
     private User user;
     private Integer topicId;
     private String topicContent;
@@ -16,6 +15,8 @@ public class TopicResponse {
     private Integer topicComment;
     private Long topicCreateTime;
     private Integer topicUserId;
+    private List<Review> review;
+    private LikeDetail likeDetail;
 
     public Integer getTopicId() {
         return topicId;
@@ -79,5 +80,22 @@ public class TopicResponse {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+    public List<Review> getReview() {
+        return review;
+    }
+
+    public void setReview(List<Review> review) {
+        this.review = review;
+    }
+
+    public LikeDetail getLikeDetail() {
+        return likeDetail;
+    }
+
+    public void setLikeDetail(LikeDetail likeDetail) {
+        this.likeDetail = likeDetail;
     }
 }

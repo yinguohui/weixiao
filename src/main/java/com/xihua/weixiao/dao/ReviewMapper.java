@@ -19,4 +19,5 @@ import java.util.List;
 public interface ReviewMapper extends BaseMapper<Review> {
    public List<ReviewResponse> queryReviewByTopicId(IdRequest idRequest);
    public int deleteReviewByTopicId(IdRequest idRequest);
+    public List<ReviewResponse> queryByTopicId(IdRequest request);
 }
