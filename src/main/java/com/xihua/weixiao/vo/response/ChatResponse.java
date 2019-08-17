@@ -1,11 +1,6 @@
 package com.xihua.weixiao.vo.response;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.xihua.weixiao.entity.User;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -22,6 +17,14 @@ public class ChatResponse  {
     private Long chatCreateTime;
     private User user;
 
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Integer getChatId() {
         return chatId;

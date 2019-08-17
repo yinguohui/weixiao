@@ -20,10 +20,14 @@
         GROUP BY c.chat_send_id
     </select>
 
-    <select id="selectChatContent">
+    <select id="selectChatContent" resultType="com.xihua.weixiao.vo.response.ChatResponse">
         SELECT u.*,c.chat_content,c.chat_create_time from user u,chat c
         WHERE c.chat_revice_id = #{receiveId}
         AND chat_revice_id = u.user_id
         and chat_send_id = #{sendId}
     </select>
+
+    <update id="updateChatStatus">
+        UPDATE chat SET chat_status=1 WHERE chat_revice_id=#{receiveId}
+    </update>
 </mapper>

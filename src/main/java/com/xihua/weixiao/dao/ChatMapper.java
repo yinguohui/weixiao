@@ -6,6 +6,9 @@ import com.xihua.weixiao.query.ChatQuery;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.response.ChatNumResponse;
 import com.xihua.weixiao.vo.response.ChatResponse;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -21,4 +24,6 @@ public interface ChatMapper extends BaseMapper<Chat> {
 
    public List<ChatNumResponse> selectChatNum(IdRequest idRequest);
     public List<ChatResponse> selectChatContent(ChatQuery chatQuery);
+
+    void updateChatStatus(@Param("receiveId") Integer receiveId);
 }
