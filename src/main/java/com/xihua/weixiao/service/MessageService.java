@@ -2,6 +2,11 @@ package com.xihua.weixiao.service;
 
 import com.xihua.weixiao.entity.Message;
 import com.baomidou.mybatisplus.service.IService;
+import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.request.MessageRequest;
+import com.xihua.weixiao.vo.response.MessageResponse;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,5 +18,7 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface MessageService extends IService<Message> {
 
-    public void addMessage();
+    public void addMessage(MessageRequest request);
+
+    public List<MessageResponse> selectByUserId(IdRequest idRequest);
 }

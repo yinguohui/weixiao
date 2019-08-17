@@ -4,6 +4,7 @@ package com.xihua.weixiao.controller;
 import com.xihua.weixiao.entity.Chat;
 import com.xihua.weixiao.entity.CommentDetail;
 import com.xihua.weixiao.result.ApiResult;
+import com.xihua.weixiao.vo.request.IdRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,7 @@ public class CommentDetailController {
      */
     @RequestMapping("/query")
     @ResponseBody
-    public ApiResult queryCommentDetail(String id) {
+    public ApiResult queryCommentDetail(IdRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
             return apiResult;

@@ -14,36 +14,16 @@ import java.io.Serializable;
  * @author YGH123
  * @since 2019-07-24
  */
-@TableName("message")
-public class MessageRequest implements Serializable {
+public class MessageRequest {
 
-    private static final long serialVersionUID = 1L;
-
-    @TableId("message_id")
-    private Integer messageId;
-    @TableField("message_no")
     private String messageNo;
-    @TableField("message_send_id")
     private Integer messageSendId;
-    @TableField("message_receive_id")
     private Integer messageReceiveId;
-    @TableField("message_content")
     private String messageContent;
-    @TableField("message_create_time")
     private Long messageCreateTime;
-    @TableField("message_status")
     private Integer messageStatus;
-    @TableField("message_prepare")
     private String messagePrepare;
 
-
-    public Integer getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(Integer messageId) {
-        this.messageId = messageId;
-    }
 
     public String getMessageNo() {
         return messageNo;
@@ -104,7 +84,6 @@ public class MessageRequest implements Serializable {
     @Override
     public String toString() {
         return "Message{" +
-        ", messageId=" + messageId +
         ", messageNo=" + messageNo +
         ", messageSendId=" + messageSendId +
         ", messageReceiveId=" + messageReceiveId +

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.xihua.weixiao.entity.Lostinfo;
 import com.xihua.weixiao.dao.LostinfoMapper;
 import com.xihua.weixiao.entity.Topic;
+import com.xihua.weixiao.query.LostInfoQuery;
 import com.xihua.weixiao.service.LostinfoService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xihua.weixiao.utils.BeanPropertiesCopyUtils;
@@ -12,6 +13,7 @@ import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.LostinfoRequest;
 import com.xihua.weixiao.vo.response.LostFoundTimeLine;
+import com.xihua.weixiao.vo.response.LostinfoResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,5 +73,10 @@ public class LostinfoServiceImpl extends ServiceImpl<LostinfoMapper, Lostinfo> i
     @Override
     public List<LostFoundTimeLine> getDonationTimeLineByMyId(IdRequest idRequest) {
         return mapper.getDonationTimeLineByMyId(idRequest);
+    }
+
+    @Override
+    public List<LostinfoResponse> selectLostinfo(LostInfoQuery query) {
+        return mapper.selectLostinfo(query);
     }
 }

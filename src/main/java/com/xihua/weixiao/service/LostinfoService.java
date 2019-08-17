@@ -3,10 +3,12 @@ package com.xihua.weixiao.service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.xihua.weixiao.entity.Lostinfo;
 import com.baomidou.mybatisplus.service.IService;
+import com.xihua.weixiao.query.LostInfoQuery;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.LostinfoRequest;
 import com.xihua.weixiao.vo.response.LostFoundTimeLine;
+import com.xihua.weixiao.vo.response.LostinfoResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -24,4 +26,5 @@ public interface LostinfoService extends IService<Lostinfo> {
     public int deleteLostinfo(IdRequest idRequest);
     public List<Lostinfo> queryLostinfo(IdQueryRequest idRequest);
     public List<LostFoundTimeLine> getDonationTimeLineByMyId(IdRequest idRequest);
+    public List<LostinfoResponse> selectLostinfo(LostInfoQuery query);
 }

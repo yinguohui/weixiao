@@ -4,6 +4,8 @@ package com.xihua.weixiao.controller;
 import com.xihua.weixiao.entity.Chat;
 import com.xihua.weixiao.result.ApiResult;
 import com.xihua.weixiao.service.MessageService;
+import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.request.MessageRequest;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -33,10 +35,10 @@ public class MessageController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public ApiResult addChat(Chat donation) {
+    public ApiResult addChat(MessageRequest request) {
         try {
             ApiResult apiResult = ApiResult.success();
-            service.addMessage();
+            service.addMessage(request);
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");
@@ -49,9 +51,10 @@ public class MessageController {
      */
     @RequestMapping("/query")
     @ResponseBody
-    public ApiResult queryChat(RowBounds rowBounds, String id, String id1) {
+    public ApiResult queryChat(IdRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
+            apiResult.setData(service.selectByUserId(idRequest));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");
@@ -64,9 +67,10 @@ public class MessageController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public ApiResult deleteChat(String id) {
+    public ApiResult deleteChat(IdRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
+            apiResult.setData(service.deleteById(idRequest.getId()));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");

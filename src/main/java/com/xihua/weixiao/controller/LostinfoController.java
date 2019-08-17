@@ -70,8 +70,6 @@ public class LostinfoController {
      * @Author: ygh
      * @Date: 2019/7/30 23:01
      */
-    @RequestMapping("/queryAll")
-    @ResponseBody
     public ApiResult queryLostinfo(IdQueryRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
@@ -124,7 +122,7 @@ public class LostinfoController {
     public ApiResult queryMyAllLost(LostInfoQuery query) {
         try {
             ApiResult apiResult = ApiResult.success();
-           // apiResult.setData(lostinfoService.queryLostinfo(idRequest));
+            apiResult.setData(lostinfoService.selectLostinfo(query));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");

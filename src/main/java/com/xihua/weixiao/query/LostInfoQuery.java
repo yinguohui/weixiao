@@ -5,6 +5,8 @@ public class LostInfoQuery extends ObjectQuery{
 
     private Integer lostType;
 
+    private String key;
+
     public Integer getLostinfoUserId() {
         return lostinfoUserId;
     }
@@ -19,5 +21,13 @@ public class LostInfoQuery extends ObjectQuery{
 
     public void setLostType(Integer lostType) {
         this.lostType = lostType;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

@@ -15,7 +15,37 @@
         <result column="lostinfo_create_time" property="lostinfoCreateTime" />
         <result column="lostinfo_user_id" property="lostinfoUserId" />
     </resultMap>
+    <resultMap id="LostinfoResponse" type="com.xihua.weixiao.vo.response.LostinfoResponse">
+        <id column="lostinfo_id" property="lostinfoId" />
+        <result column="lostinfo_name" property="lostinfoName" />
+        <result column="lostinfo_description" property="lostinfoDescription" />
+        <result column="lostinfo_img" property="lostinfoImg" />
+        <result column="lostinfo_status" property="lostinfoStatus" />
+        <result column="lostinfo_place" property="lostinfoPlace" />
+        <result column="lostinfo_create_time" property="lostinfoCreateTime" />
+        <result column="lostinfo_user_id" property="lostinfoUserId" />
+        <association property="user" javaType="com.xihua.weixiao.entity.User">
+            <id column="user_id" property="userId" />
+            <result column="user_name" property="userName" />
+            <result column="user_img" property="userImg" />
+        </association>
+    </resultMap>
+
     <select id="queryLostinfo" resultType="com.xihua.weixiao.entity.Lostinfo">
         SELECT * FROM lostinfo WHERE lostinfo_user_id = #{id} limit #{current} ,#{size}
+    </select>
+
+    <select id="selectLostinfo" resultMap="LostinfoResponse">
+        SELECT l.*,u.* FROM lostinfo l,user u
+        WHERE 1 = 1
+        <if test="lostinfoUserId!=null">
+          and  lostinfo_user_id=#{lostinfoUserId}
+        </if>
+        <if test="lostType!=null">
+            and  lostinfo_type = #{lostType}
+        </if>
+        <if test="key!=null">
+            and  lostinfo_name like #{key} or lostinfo_description like #{key}
+        </if>
     </select>
 </mapper>
