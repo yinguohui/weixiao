@@ -20,7 +20,7 @@
         GROUP BY c.chat_send_id
     </select>
 
-    <select id="">
+    <select id="selectChatContent">
         SELECT u.*,c.chat_content,c.chat_create_time from user u,chat c
         WHERE c.chat_revice_id = #{receiveId}
         AND chat_revice_id = u.user_id
