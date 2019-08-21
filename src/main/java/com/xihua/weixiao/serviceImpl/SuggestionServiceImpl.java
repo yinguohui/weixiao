@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xihua.weixiao.utils.FileUtils;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.response.DonationDetailResponse;
+import com.xihua.weixiao.vo.response.SuggestionDetailResponse;
 import com.xihua.weixiao.vo.response.SuggestionResponse;
 import com.xihua.weixiao.vo.response.SuggestionTimeLine;
 import org.slf4j.Logger;
@@ -57,7 +59,7 @@ public class SuggestionServiceImpl extends ServiceImpl<SuggestionMapper, Suggest
         suggestion1.setSuggestionNo(uuid);
         suggestion1.setSuggestionContent(suggestion.getSuggestionContent());
         suggestion1.setSuggestionStatus(1);
-        String name = fileUtils.getUpUrl("suggestion",files);
+        String name = fileUtils.getUpUrl("suggestion/",files);
         suggestion1.setSuggestionImg(name);
         return mapper.insert(suggestion1);
     }
@@ -65,6 +67,11 @@ public class SuggestionServiceImpl extends ServiceImpl<SuggestionMapper, Suggest
     @Override
     public List<SuggestionTimeLine> getSuggestionTimeLineByMyId(IdRequest query) {
         return mapper.getSuggestionTimeLineByMyId(query);
+    }
+
+    @Override
+    public SuggestionDetailResponse getSuggestionDetail(IdRequest idRequest) {
+        return mapper.getSuggestionDetail(idRequest);
     }
 
     //通过ID删除反馈意见

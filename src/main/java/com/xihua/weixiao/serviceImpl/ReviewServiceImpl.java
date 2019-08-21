@@ -1,14 +1,18 @@
 package com.xihua.weixiao.serviceImpl;
 
+import com.xihua.weixiao.dao.TopicMapper;
 import com.xihua.weixiao.entity.Review;
 import com.xihua.weixiao.dao.ReviewMapper;
+import com.xihua.weixiao.entity.Topic;
 import com.xihua.weixiao.service.ReviewService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xihua.weixiao.utils.BeanPropertiesCopyUtils;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.ReviewRequest;
+import com.xihua.weixiao.vo.response.MineReviewResponse;
 import com.xihua.weixiao.vo.response.ReviewResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.persistence.Id;
@@ -29,21 +33,33 @@ public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review> impleme
 
     @Resource
     private ReviewMapper mapper;
+    @Resource
+    private TopicMapper topicMapper;
+
     //增加评论
     @Override
+    @Transactional
     public int addReview(ReviewRequest reviewRequest) {
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
         Review review = new Review();
-        BeanPropertiesCopyUtils.copyProperties(review,reviewRequest);
+        BeanPropertiesCopyUtils.copyProperties(reviewRequest,review);
         review.setReviewCreateTime(System.currentTimeMillis());
         review.setReviewStatus(1);
         review.setReviewNo(uuid);
+        Topic topic = topicMapper.selectById(reviewRequest.getReviewTopicId());
+        topic.setTopicComment(topic.getTopicComment()+1);
+        topicMapper.updateById(topic);
         return mapper.insert(review);
     }
 
     @Override
     public List<ReviewResponse> queryByTopicId(IdRequest request) {
         return mapper.queryByTopicId(request);
+    }
+
+    @Override
+    public List<MineReviewResponse>  getMineReview(IdRequest request) {
+        return mapper.getMineReview(request);
     }
 
     //删除评论

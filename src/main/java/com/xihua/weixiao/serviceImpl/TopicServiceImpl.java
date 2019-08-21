@@ -2,6 +2,7 @@ package com.xihua.weixiao.serviceImpl;
 
 import com.xihua.weixiao.dao.CommentDetailMapper;
 import com.xihua.weixiao.dao.LikeDetailMapper;
+import com.xihua.weixiao.dao.ReviewMapper;
 import com.xihua.weixiao.entity.Topic;
 import com.xihua.weixiao.dao.TopicMapper;
 import com.xihua.weixiao.query.TopicQuery;
@@ -17,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -39,9 +41,7 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
     @Resource
     private TopicMapper mapper;
     @Resource
-    private LikeDetailMapper likeDetailMapper;
-    @Resource
-    private CommentDetailMapper commentDetailMapper;
+    private ReviewMapper reviewMapper;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TopicServiceImpl.class);
 
@@ -64,9 +64,9 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
 
     // 通过Id删除主题
     @Override
+    @Transactional
     public Integer deleteTopicById(IdRequest request) {
-        likeDetailMapper.deleteLikeDetailByTopicId(request);
-        commentDetailMapper.deleteCommentDetailByTopicId(request);
+        reviewMapper.deleteReviewByTopicId(request);
         return mapper.deleteById(request.getId());
     }
 

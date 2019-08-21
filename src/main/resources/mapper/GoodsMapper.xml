@@ -17,6 +17,22 @@
         <result column="goods_num" property="goodsNum" />
         <result column="goods_create_time" property="goodsCreateTime" />
     </resultMap>
+    <resultMap id="DetailResponse" type="com.xihua.weixiao.vo.response.GoodsDetailResponse">
+        <id column="goods_id" property="goodsId" />
+        <result column="goods_name" property="goodsName" />
+        <result column="goods_img" property="goodsImg" />
+        <result column="goods_price" property="goodsPrice" />
+        <result column="goods_place" property="goodsPlace" />
+        <result column="goods_desciption" property="goodsDesciption" />
+        <result column="goods_create_time" property="goodsCreateTime" />
+        <association property="user" javaType="com.xihua.weixiao.entity.User">
+            <id column="user_id" property="userId" ></id>
+            <result column="user_name" property="userName" />
+            <result column="user_img" property="userImg" />
+        </association>
+    </resultMap>
+
+
     <!-- 通用查询映射结果 -->
     <resultMap id="GoodsResponse" type="com.xihua.weixiao.vo.response.GoodsResponse">
         <id column="goods_id" property="goodsId" />
@@ -41,5 +57,9 @@
     </select>
     <select id="getGoodsTimeLine" resultMap="GoodsTimeLine">
         SELECT * FROM goods where goods_user_no = #{id}
+    </select>
+    <!--queryDetailById-->
+    <select id="queryDetailById" resultMap="DetailResponse">
+        SELECT g.*,u.* FROM goods g,user u where g.goods_id = #{id} and u.user_id = g.goods_user_no
     </select>
 </mapper>

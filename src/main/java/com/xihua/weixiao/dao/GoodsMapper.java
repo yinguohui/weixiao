@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.xihua.weixiao.query.GoodsQuery;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.response.GoodsDetailResponse;
 import com.xihua.weixiao.vo.response.GoodsResponse;
 import com.xihua.weixiao.vo.response.GoodsResponseBean;
 import com.xihua.weixiao.vo.response.GoodsTimeLine;
@@ -23,4 +24,6 @@ public interface GoodsMapper extends BaseMapper<Goods> {
    public List<GoodsResponse> getGoods(GoodsQuery goodsQuery);
    public List<GoodsResponse> selectByKsy(String key);
     public List<GoodsTimeLine> getGoodsTimeLine(IdRequest idRequest);
+
+    public GoodsDetailResponse queryDetailById(IdRequest idRequest);
 }

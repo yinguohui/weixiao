@@ -24,20 +24,31 @@
         <result column="lostinfo_place" property="lostinfoPlace" />
         <result column="lostinfo_create_time" property="lostinfoCreateTime" />
         <result column="lostinfo_user_id" property="lostinfoUserId" />
+        <result column="lostinfo_type" property="lostinfoType" />
         <association property="user" javaType="com.xihua.weixiao.entity.User">
             <id column="user_id" property="userId" />
             <result column="user_name" property="userName" />
             <result column="user_img" property="userImg" />
         </association>
     </resultMap>
+    <resultMap id="TimeLine" type="com.xihua.weixiao.vo.response.LostFoundTimeLine">
+        <id column="lostinfo_id" property="lostinfoId" />
+        <result column="lostinfo_name" property="lostinfoName" />
+        <result column="lostinfo_create_time" property="lostinfoCreateTime" />
+    </resultMap>
 
-    <select id="queryLostinfo" resultType="com.xihua.weixiao.entity.Lostinfo">
-        SELECT * FROM lostinfo WHERE lostinfo_user_id = #{id} limit #{current} ,#{size}
+    <select id="queryLostinfo" resultMap="LostinfoResponse">
+        SELECT l.*,u.* FROM lostinfo l,user u
+        WHERE  lostinfo_type = #{id} and l.lostinfo_user_id = u.user_id
+</select>
+    <select id="queryDetailLost" resultMap="LostinfoResponse">
+        SELECT l.*,u.* FROM lostinfo l,user u
+        WHERE  l.lostinfo_id = #{id} and l.lostinfo_user_id = u.user_id
     </select>
 
     <select id="selectLostinfo" resultMap="LostinfoResponse">
         SELECT l.*,u.* FROM lostinfo l,user u
-        WHERE 1 = 1
+        WHERE  l.lostinfo_user_id = u.user_id
         <if test="lostinfoUserId!=null">
           and  lostinfo_user_id=#{lostinfoUserId}
         </if>
@@ -47,5 +58,8 @@
         <if test="key!=null">
             and  lostinfo_name like #{key} or lostinfo_description like #{key}
         </if>
+    </select>
+    <select id="getDonationTimeLineByMyId" resultMap="TimeLine">
+        SELECT lostinfo_id,lostinfo_name,lostinfo_create_time from lostinfo where lostinfo_user_id = #{id}
     </select>
 </mapper>

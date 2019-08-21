@@ -88,4 +88,5 @@
          and u.user_id = #{id}
          limit #{pageOffset} , #{pageSize}
     </select>
+
 </mapper>

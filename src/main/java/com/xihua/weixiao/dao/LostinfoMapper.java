@@ -20,9 +20,10 @@ import java.util.List;
  * @since 2019-07-24
  */
 public interface LostinfoMapper extends BaseMapper<Lostinfo> {
-    public List<Lostinfo> queryLostinfo(IdQueryRequest idRequest);
+    public List<LostinfoResponse> queryLostinfo(IdRequest idRequest);
 
     public List<LostFoundTimeLine> getDonationTimeLineByMyId(IdRequest idRequest);
 
     public List<LostinfoResponse> selectLostinfo(LostInfoQuery query);
+    public LostinfoResponse queryDetailLost(IdRequest idRequest);
 }

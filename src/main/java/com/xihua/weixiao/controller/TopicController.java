@@ -98,10 +98,10 @@ public class TopicController {
      */
     @RequestMapping("/deleteTopic")
     @ResponseBody
-    public ApiResult deleteTopicById(IdRequest request) {
+    public ApiResult deleteTopicById(@RequestBody IdRequest request) {
         try {
             ApiResult apiResult = ApiResult.success();
-            topicService.deleteTopicById(request);
+            apiResult.setData(topicService.deleteTopicById(request));
             return apiResult;
         } catch (Exception e) {
             LOGGER.info("删除主题失败",e);

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -57,10 +58,23 @@ public class UserController {
     }
     @RequestMapping("/updateuserinfo")
     @ResponseBody
-    public ApiResult updateUserInfo(UserRequest request){
+    public ApiResult updateUserInfo(@RequestBody UserRequest request){
         ApiResult apiResult = ApiResult.success();
         try {
             apiResult.setData(userService.updateUserInfo(request));
+        }catch (Exception e){
+            e.printStackTrace();
+            apiResult = ApiResult.failure("更新失败");
+        }
+        return apiResult;
+    }
+    //头像上传
+    @RequestMapping(value="/headimg")
+    @ResponseBody
+    public ApiResult createTitle(MultipartFile create,String userid) {
+        ApiResult apiResult = ApiResult.success();
+        try {
+            apiResult.setData(userService.createTitle(userid,create));
         }catch (Exception e){
             e.printStackTrace();
             apiResult = ApiResult.failure("更新失败");

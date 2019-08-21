@@ -20,6 +20,19 @@
         <result column="suggestion_create_time" property="suggestionCreateTime" />
         <result column="suggestion_status" property="suggestionStatus" />
     </resultMap>
+
+    <resultMap id="DetailResponse" type="com.xihua.weixiao.vo.response.SuggestionDetailResponse">
+        <id column="suggestion_id" property="suggestionId" />
+        <result column="suggestion_content" property="suggestionContent" />
+        <result column="suggestion_img" property="suggestionImg" />
+        <result column="suggestion_user_id" property="suggestionUserId" />
+        <result column="suggestion_create_time" property="suggestionCreateTime" />
+        <association property="user" javaType="com.xihua.weixiao.entity.User">
+            <id column="user_id" property="userId" />
+            <result column="user_name" property="userName" />
+            <result column="user_img" property="userImg" />
+        </association>
+    </resultMap>
     <resultMap id="ResponseTimeLine" type="com.xihua.weixiao.vo.response.SuggestionTimeLine">
         <id column="suggestion_id" property="suggestionId" />
         <result column="suggestion_content" property="suggestionContent" />
@@ -31,5 +44,8 @@
 
     <select id="getSuggestionTimeLineByMyId" resultMap="ResponseTimeLine">
          SELECT * FROM suggestion WHERE suggestion_user_id = #{id}
+    </select>
+    <select id="getSuggestionDetail" resultMap="DetailResponse">
+        SELECT s.*,u.* FROM suggestion s,user u WHERE s.suggestion_user_id = u.user_id and s.suggestion_id = #{id}
     </select>
 </mapper>

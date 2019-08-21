@@ -3,6 +3,7 @@ package com.xihua.weixiao.dao;
 import com.xihua.weixiao.entity.Donation;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.response.DonationDetailResponse;
 import com.xihua.weixiao.vo.response.DonationResponse;
 import com.xihua.weixiao.vo.response.DonationTimeLine;
 
@@ -20,4 +21,6 @@ public interface DonationMapper extends BaseMapper<Donation> {
     public List<DonationResponse> queryDonationByUserId(IdRequest idRequest);
 
     public List<DonationTimeLine> getDonationTimeLine(IdRequest idRequest);
+
+    public DonationDetailResponse queyDetailDonation(IdRequest idRequest);
 }

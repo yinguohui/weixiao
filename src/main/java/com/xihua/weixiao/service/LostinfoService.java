@@ -24,7 +24,8 @@ import java.util.List;
 public interface LostinfoService extends IService<Lostinfo> {
     public int addLostinfo(LostinfoRequest lostinfo, MultipartFile[] files);
     public int deleteLostinfo(IdRequest idRequest);
-    public List<Lostinfo> queryLostinfo(IdQueryRequest idRequest);
+    public List<LostinfoResponse> queryLostinfo(IdRequest idRequest);
     public List<LostFoundTimeLine> getDonationTimeLineByMyId(IdRequest idRequest);
     public List<LostinfoResponse> selectLostinfo(LostInfoQuery query);
+    public LostinfoResponse queryDetailLost(IdRequest idRequest);
 }

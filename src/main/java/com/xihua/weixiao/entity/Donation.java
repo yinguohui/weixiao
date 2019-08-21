@@ -38,7 +38,16 @@ public class Donation implements Serializable {
     private Integer donationUserId;
     @TableField("donation_create_time")
     private Long donationCreateTime;
+    @TableField("donation_img")
+    private String donationImg;
 
+    public String getDonationImg() {
+        return donationImg;
+    }
+
+    public void setDonationImg(String donationImg) {
+        this.donationImg = donationImg;
+    }
 
     public int getDonationId() {
         return donationId;

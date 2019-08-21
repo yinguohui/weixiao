@@ -9,6 +9,7 @@ import com.xihua.weixiao.utils.BeanPropertiesCopyUtils;
 import com.xihua.weixiao.utils.FileUtils;
 import com.xihua.weixiao.vo.request.DonationRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.response.DonationDetailResponse;
 import com.xihua.weixiao.vo.response.DonationResponse;
 import com.xihua.weixiao.vo.response.DonationTimeLine;
 import org.springframework.stereotype.Service;
@@ -48,11 +49,21 @@ public class DonationServiceImpl extends ServiceImpl<DonationMapper, Donation> i
         donation1.setDonationNo(uuid);
         donation1.setDoantionStatus(1);
         String name = fileUtils.getUpUrl("donation/",files);
+        donation1.setDonationImg(name);
         return mapper.insert(donation1);
     }
 
     @Override
     public List<DonationTimeLine> getDonationTimeLine(IdRequest idRequest) {
         return mapper.getDonationTimeLine(idRequest);
+    }
+
+    @Override
+    public DonationDetailResponse queyDetailDonation(IdRequest idRequest) {
+        return mapper.queyDetailDonation(idRequest);
+    }
+
+    public void deleteById(IdRequest idRequest){
+        mapper.deleteById(idRequest.getId());
     }
 }

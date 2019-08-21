@@ -18,7 +18,7 @@ import org.springframework.web.WebApplicationInitializer;
 //	}
 //
 //}
-public class WeixiaoApplication extends SpringBootServletInitializer implements WebApplicationInitializer {
+public class WeixiaoApplication extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){

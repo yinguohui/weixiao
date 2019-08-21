@@ -32,7 +32,7 @@ public class Lostinfo implements Serializable {
     @TableField("lostinfo_status")
     private Integer lostinfoStatus;
     @TableField("lostinfo_place")
-    private Integer lostinfoPlace;
+    private String lostinfoPlace;
     @TableField("lostinfo_type")
     private Integer lostinfoType;
     @TableField("lostinfo_create_time")
@@ -89,11 +89,11 @@ public class Lostinfo implements Serializable {
         this.lostinfoStatus = lostinfoStatus;
     }
 
-    public Integer getLostinfoPlace() {
+    public String getLostinfoPlace() {
         return lostinfoPlace;
     }
 
-    public void setLostinfoPlace(Integer lostinfoPlace) {
+    public void setLostinfoPlace(String lostinfoPlace) {
         this.lostinfoPlace = lostinfoPlace;
     }
 

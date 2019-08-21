@@ -11,5 +11,7 @@
         <result column="comment_detail_create_time" property="commentDetailCreateTime" />
         <result column="comment_detail_status" property="commentDetailStatus" />
     </resultMap>
-
+    <delete id="deleteCommentDetailByTopicId">
+        delete from comment where comment_detail_topic_id = #{id}
+    </delete>
 </mapper>

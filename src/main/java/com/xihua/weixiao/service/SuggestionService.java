@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.service.IService;
 import com.xihua.weixiao.query.SuggestionQuery;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.response.DonationDetailResponse;
+import com.xihua.weixiao.vo.response.SuggestionDetailResponse;
 import com.xihua.weixiao.vo.response.SuggestionResponse;
 import com.xihua.weixiao.vo.response.SuggestionTimeLine;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,4 +26,5 @@ public interface SuggestionService extends IService<Suggestion> {
    public int addSuggestion(Suggestion suggestion, MultipartFile[] files);
    public List<SuggestionTimeLine> getSuggestionTimeLineByMyId(IdRequest query);
 
+    public SuggestionDetailResponse getSuggestionDetail(IdRequest idRequest);
 }

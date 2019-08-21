@@ -8,6 +8,7 @@ import com.xihua.weixiao.vo.request.DonationRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -96,6 +97,30 @@ public class DonationController {
             apiResult.setData(donationService.selectById(idRequest.getId()));
             return apiResult;
         } catch (Exception e) {
+            return ApiResult.failure("");
+        }
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public ApiResult DeleteById(@RequestBody IdRequest idRequest) {
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(donationService.deleteById(idRequest.getId()));
+            return apiResult;
+        } catch (Exception e) {
+            return ApiResult.failure("");
+        }
+    }
+    @RequestMapping("/queydetaildonation")
+    @ResponseBody
+    public ApiResult queyDetailDonation(@RequestBody IdRequest idRequest) {
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(donationService.queyDetailDonation(idRequest));
+            return apiResult;
+        } catch (Exception e) {
+            e.printStackTrace();
             return ApiResult.failure("");
         }
     }

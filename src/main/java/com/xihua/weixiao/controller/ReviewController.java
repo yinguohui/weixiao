@@ -7,6 +7,8 @@ import com.xihua.weixiao.result.ApiResult;
 import com.xihua.weixiao.service.ReviewService;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.request.ReviewRequest;
+import com.xihua.weixiao.vo.response.ReviewResponse;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -38,9 +40,10 @@ public class ReviewController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public ApiResult addReview(Review review) {
+    public ApiResult addReview(@RequestBody ReviewRequest request) {
         try {
             ApiResult apiResult = ApiResult.success();
+            apiResult.setData(reviewService.addReview(request));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");
@@ -88,6 +91,23 @@ public class ReviewController {
         try {
             ApiResult apiResult = ApiResult.success();
             apiResult.setData(reviewService.queryByTopicId(request));
+            return apiResult;
+        } catch (Exception e) {
+            return ApiResult.failure("");
+        }
+    }
+    //getMineReview
+    /**
+     * @Description : 关于我的
+     * @Author: ygh
+     * @Date: 2019/7/31 22:00
+     */
+    @RequestMapping("/getinemreview")
+    @ResponseBody
+    public ApiResult getMineReview(@RequestBody IdRequest request) {
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(reviewService.getMineReview(request));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.xihua.weixiao.query.SuggestionQuery;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.response.DonationDetailResponse;
+import com.xihua.weixiao.vo.response.SuggestionDetailResponse;
 import com.xihua.weixiao.vo.response.SuggestionResponse;
 import com.xihua.weixiao.vo.response.SuggestionTimeLine;
 
@@ -22,4 +24,6 @@ public interface SuggestionMapper extends BaseMapper<Suggestion> {
     public List<SuggestionResponse> getSuggestionByMyId(IdRequest query);
 
     public List<SuggestionTimeLine> getSuggestionTimeLineByMyId(IdRequest query);
+
+    public SuggestionDetailResponse getSuggestionDetail(IdRequest idRequest);
 }

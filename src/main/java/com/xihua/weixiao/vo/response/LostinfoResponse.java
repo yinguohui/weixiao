@@ -22,9 +22,10 @@ public class LostinfoResponse  {
     private String lostinfoDescription;
     private String lostinfoImg;
     private Integer lostinfoStatus;
-    private Integer lostinfoPlace;
+    private String lostinfoPlace;
     private Long lostinfoCreateTime;
     private Integer lostinfoUserId;
+    private Integer lostinfoType;
     private User user;
 
 
@@ -68,11 +69,11 @@ public class LostinfoResponse  {
         this.lostinfoStatus = lostinfoStatus;
     }
 
-    public Integer getLostinfoPlace() {
+    public String getLostinfoPlace() {
         return lostinfoPlace;
     }
 
-    public void setLostinfoPlace(Integer lostinfoPlace) {
+    public void setLostinfoPlace(String lostinfoPlace) {
         this.lostinfoPlace = lostinfoPlace;
     }
 
@@ -98,5 +99,13 @@ public class LostinfoResponse  {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getLostinfoType() {
+        return lostinfoType;
+    }
+
+    public void setLostinfoType(Integer lostinfoType) {
+        this.lostinfoType = lostinfoType;
     }
 }

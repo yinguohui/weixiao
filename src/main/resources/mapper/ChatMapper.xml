@@ -13,6 +13,19 @@
         <result column="chat_create_time" property="chatCreateTime" />
     </resultMap>
 
+    <resultMap id="ResponseChat" type="com.xihua.weixiao.vo.response.ChatAllResponse">
+        <id column="chat_id" property="chatId" />
+        <result column="chat_send_id" property="chatSendId" />
+        <result column="chat_content" property="chatContent" />
+        <result column="chat_status" property="chatStatus" />
+        <result column="chat_create_time" property="chatCreateTime" />
+        <association property="user" javaType="com.xihua.weixiao.entity.User">
+            <id column="user_id" property="userId" />
+            <result column="user_name" property="userName" />
+            <result column="user_img" property="userImg" />
+        </association>
+    </resultMap>
+
     <select id="selectChatNum" resultMap="BaseResultMap">
         SELECT u.*,COUNT(*) as num from user u,chat c WHERE c.chat_revice_id = #{id}
         AND chat_revice_id = u.user_id
@@ -26,4 +39,20 @@
         AND chat_revice_id = u.user_id
         and chat_send_id = #{sendId}
     </select>
+
+    <select id="getAllChatById" resultMap="ResponseChat">
+        SELECT B.*,u.* FROM
+        (SELECT * FROM chat WHERE chat_revice_id = #{id} ORDER BY chat_create_time DESC) B,user u
+        WHERE u.user_id = B.chat_id GROUP BY B.chat_send_id
+    </select>
+    <select id="getChatContent" resultMap="ResponseChat">
+        SELECT u.*,c.* from user u,chat c
+        WHERE u.user_id=c.chat_send_id and chat_send_id = #{sendId}
+        and c.chat_revice_id = #{receiveId}
+        or (chat_send_id = #{receiveId} and c.chat_revice_id = #{sendId} and u.user_id=c.chat_send_id)
+        ORDER BY c.chat_create_time desc
+    </select>
+    <delete id="deleteByUserId">
+        delete from chat where chat_send_id =  #{chatSendId} and chat_revice_id =  #{chatReviceIdchatReviceId}
+    </delete>
 </mapper>

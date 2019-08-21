@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -49,7 +50,7 @@ public class LostinfoServiceImpl extends ServiceImpl<LostinfoMapper, Lostinfo> i
     public int addLostinfo(LostinfoRequest lostinfo, MultipartFile[] files) {
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
         Lostinfo lostinfo1 = new Lostinfo();
-        BeanPropertiesCopyUtils.copyProperties(lostinfo1,lostinfo);
+        BeanPropertiesCopyUtils.copyProperties(lostinfo,lostinfo1);
         lostinfo1.setLostinfoNo(uuid);
         lostinfo1.setLostinfoStatus(1);
         lostinfo1.setLostinfoCreateTime(System.currentTimeMillis());
@@ -66,7 +67,7 @@ public class LostinfoServiceImpl extends ServiceImpl<LostinfoMapper, Lostinfo> i
 
     //查询失物招领
     @Override
-    public List<Lostinfo> queryLostinfo(IdQueryRequest idRequest) {
+    public List<LostinfoResponse> queryLostinfo(IdRequest idRequest) {
         return mapper.queryLostinfo(idRequest);
     }
 
@@ -78,5 +79,10 @@ public class LostinfoServiceImpl extends ServiceImpl<LostinfoMapper, Lostinfo> i
     @Override
     public List<LostinfoResponse> selectLostinfo(LostInfoQuery query) {
         return mapper.selectLostinfo(query);
+    }
+
+    @Override
+    public LostinfoResponse queryDetailLost(IdRequest idRequest) {
+        return mapper.queryDetailLost(idRequest);
     }
 }

@@ -133,5 +133,23 @@ public class SuggestionController {
             return ApiResult.failure("");
         }
     }
+    //DonationDetailResponse
+    /**
+     * @Description :
+     * @Author: ygh
+     * @Date: 2019/8/12 16:42
+     */
+    @RequestMapping("/querysuggestionbyid")
+    @ResponseBody
+    public ApiResult getSuggestionDetail(@RequestBody IdRequest idRequest) {
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(service.getSuggestionDetail(idRequest));
+            return apiResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.failure("");
+        }
+    }
 }
 

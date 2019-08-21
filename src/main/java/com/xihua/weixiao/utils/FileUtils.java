@@ -50,4 +50,29 @@ public class FileUtils {
         }
         return name;
     }
+    public String getUpUrl(String type,MultipartFile files){
+        String name = "";
+        if (null==files){
+            return name;
+        }
+        //定义时间戳作为文件名的一部分吗，为了文件名不重复定义时间戳为文件名
+        String path = System.getProperty("user.dir")+"\\src\\main\\resources\\static\\images\\";
+        File dir = new File(path, type);
+        String fileName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+        // MultipartFile自带的解析方法
+        File file = new File(path + "\\" + type + "\\" + fileName + ".png");
+        try {
+            files.transferTo(file);
+        } catch (IOException e) {
+            LOGGER.info("转化文件失败",e);
+        }
+        name = name + serverUrl + type + file.getName() + "$%";
+        if (!name.equals("")){
+            name = name.substring(0,name.length()-2);
+        }
+        return name;
+    }
 }

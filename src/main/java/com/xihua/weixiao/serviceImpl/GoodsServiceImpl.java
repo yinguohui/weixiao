@@ -6,10 +6,12 @@ import com.xihua.weixiao.query.GoodsQuery;
 import com.xihua.weixiao.query.PageResult;
 import com.xihua.weixiao.service.GoodsService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.xihua.weixiao.utils.BeanPropertiesCopyUtils;
 import com.xihua.weixiao.utils.FileUtils;
 import com.xihua.weixiao.vo.request.GoodsRequest;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.response.GoodsDetailResponse;
 import com.xihua.weixiao.vo.response.GoodsResponse;
 import com.xihua.weixiao.vo.response.GoodsResponseBean;
 import com.xihua.weixiao.vo.response.GoodsTimeLine;
@@ -41,14 +43,9 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     public int addGoods(GoodsRequest goods, MultipartFile[] files) throws IOException {
         String uuid= UUID.randomUUID().toString().replaceAll("-","");
         Goods goods1 = new Goods();
+        BeanPropertiesCopyUtils.copyProperties(goods,goods1);
         goods1.setGoodsNo(uuid);
         goods1.setGoodsCreateTime(System.currentTimeMillis());
-        goods1.setGoodsUserNo(goods.getGoodsUserNo());
-        goods1.setGoodsDesciption(goods.getGoodsDesciption());
-        goods1.setGoodsPrice(goods.getGoodsPrice());
-        goods1.setGoodsType(goods.getGoodsType());
-        goods1.setGoodsPrice(goods.getGoodsPrice());
-        goods1.setGoodsName(goods.getGoodsName());
         String name = fileUtils.getUpUrl("goods/",files);
         goods1.setGoodsImg(name);
         return goodsMapper.insert(goods1);
@@ -81,5 +78,10 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Override
     public List<GoodsTimeLine> getGoodsTimeLine(IdRequest idRequest) {
         return goodsMapper.getGoodsTimeLine(idRequest);
+    }
+
+    @Override
+    public GoodsDetailResponse queryDetailById(IdRequest idRequest) {
+        return goodsMapper.queryDetailById(idRequest);
     }
 }

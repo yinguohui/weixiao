@@ -8,6 +8,7 @@ import com.xihua.weixiao.vo.request.LoginRequest;
 import com.xihua.weixiao.vo.request.UserRequest;
 import com.xihua.weixiao.vo.response.IdrResponse;
 import com.xihua.weixiao.vo.response.UserResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -28,4 +29,6 @@ public interface UserService extends IService<User> {
     public int updateUserInfo(UserRequest user);
 
     public UserResponse getUserInfoById(IdRequest idRequest);
+
+    public int createTitle(String userid, MultipartFile create);
 }

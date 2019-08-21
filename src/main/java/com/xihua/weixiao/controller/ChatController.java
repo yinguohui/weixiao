@@ -8,6 +8,7 @@ import com.xihua.weixiao.service.ChatService;
 import com.xihua.weixiao.vo.request.ChatRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -84,13 +85,51 @@ public class ChatController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public ApiResult deleteChat(String id) {
+    public ApiResult deleteChat(ChatQuery chatQuery) {
         try {
             ApiResult apiResult = ApiResult.success();
+            apiResult.setData(service.deleteByUserId(chatQuery));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");
         }
     }
+    //getAllChatById
+    /**
+     * @Description : 删除聊天记录
+     * @Author: ygh
+     * @Date: 2019/7/30 23:01
+     */
+    @RequestMapping("/getallchatbyid")
+    @ResponseBody
+    public ApiResult getAllChatById(@RequestBody IdRequest idRequest) {
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(service.getAllChatById(idRequest));
+            return apiResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.failure("");
+        }
+    }
+    //getChatContent
+    /**
+     * @Description : 删除聊天记录
+     * @Author: ygh
+     * @Date: 2019/7/30 23:01
+     */
+    @RequestMapping("/getchatcontent")
+    @ResponseBody
+    public ApiResult getChatContent(@RequestBody ChatQuery chatQuery) {
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(service.getChatContent(chatQuery));
+            return apiResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.failure("");
+        }
+    }
+
 }
 

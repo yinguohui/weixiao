@@ -98,5 +98,39 @@ public class GoodsController {
             return ApiResult.failure("");
         }
     }
+    /**
+     * @Description : 学生出售物品
+     * @Author: ygh
+     * @Date: 2019/7/30 21:49
+     */
+    @RequestMapping(value = "/querydetailbyid")
+    @ResponseBody
+    public ApiResult queryDetailById(@RequestBody IdRequest idRequest){
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(goodsService.queryDetailById(idRequest));
+            return apiResult;
+        }catch (Exception e){
+            LOGGER.info("出售物品失败",e);
+            return ApiResult.failure("出售物品失败");
+        }
+    }
+    /**
+     * @Description : 学生出售物品
+     * @Author: ygh
+     * @Date: 2019/7/30 21:49
+     */
+    @RequestMapping("/delete")
+    @ResponseBody
+    public ApiResult delete(@RequestBody IdRequest idRequest){
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(goodsService.deleteById(idRequest.getId()));
+            return apiResult;
+        }catch (Exception e){
+            LOGGER.info("出售物品失败",e);
+            return ApiResult.failure("出售物品失败");
+        }
+    }
 }
 

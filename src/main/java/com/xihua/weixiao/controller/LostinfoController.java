@@ -9,6 +9,7 @@ import com.xihua.weixiao.service.LostinfoService;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.LostinfoRequest;
+import org.jboss.logging.Field;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -40,7 +41,7 @@ public class LostinfoController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public ApiResult addLostinfo(LostinfoRequest lostinfo, MultipartFile[] files) {
+    public ApiResult addLostinfo(LostinfoRequest lostinfo,MultipartFile[] files) {
         try {
             ApiResult apiResult = ApiResult.success();
             apiResult.setData(lostinfoService.addLostinfo(lostinfo,files));
@@ -56,7 +57,7 @@ public class LostinfoController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public ApiResult deleteLostinfo(IdRequest idRequest) {
+    public ApiResult deleteLostinfo(@RequestBody IdRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
             apiResult.setData(lostinfoService.deleteLostinfo(idRequest));
@@ -70,10 +71,12 @@ public class LostinfoController {
      * @Author: ygh
      * @Date: 2019/7/30 23:01
      */
-    public ApiResult queryLostinfo(IdQueryRequest idRequest) {
+    @RequestMapping("/querydetailbyid")
+    @ResponseBody
+    public ApiResult queryLostinfo(@RequestBody IdRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
-            apiResult.setData(lostinfoService.queryLostinfo(idRequest));
+            apiResult.setData(lostinfoService.queryDetailLost(idRequest));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");
@@ -86,12 +89,13 @@ public class LostinfoController {
      */
     @RequestMapping("/queryAllLost")
     @ResponseBody
-    public ApiResult queryAllLost(LostInfoQuery query) {
+    public ApiResult queryAllLost(@RequestBody  IdRequest idRequest) {
         try {
             ApiResult apiResult = ApiResult.success();
-        //    apiResult.setData(lostinfoService.queryLostinfo(idRequest));
+            apiResult.setData(lostinfoService.queryLostinfo(idRequest));
             return apiResult;
         } catch (Exception e) {
+            e.printStackTrace();
             return ApiResult.failure("");
         }
     }
@@ -102,10 +106,10 @@ public class LostinfoController {
      */
     @RequestMapping("/queryAllFound")
     @ResponseBody
-    public ApiResult queryAllFound(LostInfoQuery query) {
+    public ApiResult queryAllFound(@RequestBody LostInfoQuery query) {
         try {
             ApiResult apiResult = ApiResult.success();
-          //  apiResult.setData(lostinfoService.queryLostinfo(idRequest));
+            apiResult.setData(lostinfoService.selectLostinfo(query));
             return apiResult;
         } catch (Exception e) {
             return ApiResult.failure("");
@@ -119,7 +123,7 @@ public class LostinfoController {
      */
     @RequestMapping("/queryMyAllLost")
     @ResponseBody
-    public ApiResult queryMyAllLost(LostInfoQuery query) {
+    public ApiResult queryMyAllLost(@RequestBody LostInfoQuery query) {
         try {
             ApiResult apiResult = ApiResult.success();
             apiResult.setData(lostinfoService.selectLostinfo(query));
@@ -157,6 +161,7 @@ public class LostinfoController {
             apiResult.setData(lostinfoService.getDonationTimeLineByMyId(idRequest));
             return apiResult;
         } catch (Exception e) {
+            e.printStackTrace();
             return ApiResult.failure("");
         }
     }

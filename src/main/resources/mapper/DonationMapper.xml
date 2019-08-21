@@ -13,8 +13,26 @@
         <result column="doantion_descrption" property="doantionDescrption" />
         <result column="doantion_status" property="doantionStatus" />
         <result column="donation_user_id" property="donationUserId" />
+        <result column="donation_img" property="donationImg" />
         <result column="donation_create_time" property="donationCreateTime" />
     </resultMap>
+    <resultMap id="DetailResponse" type="com.xihua.weixiao.vo.response.DonationDetailResponse">
+        <id column="donation_id" property="donationId" />
+        <result column="donation_name" property="donationName" />
+        <result column="doantion_place" property="doantionPlace" />
+        <result column="doantion_time" property="doantionTime" />
+        <result column="donation_num" property="donationNum" />
+        <result column="donation_img" property="donationImg" />
+        <result column="doantion_descrption" property="doantionDescrption" />
+        <result column="donation_user_id" property="donationUserId" />
+        <result column="donation_create_time" property="donationCreateTime" />
+        <association property="user" javaType="com.xihua.weixiao.entity.User">
+            <id column="user_id" property="userId" />
+            <result column="user_name" property="userName" />
+            <result column="user_img" property="userImg" />
+        </association>
+    </resultMap>
+
     <resultMap id="ResponseTimeLime" type="com.xihua.weixiao.vo.response.DonationTimeLine">
         <id column="donation_id" property="donationId" />
         <result column="donation_name" property="donationName" />
@@ -25,4 +43,7 @@
         select * from donation where donation_user_id = #{id}
     </select>
 
+    <select id="queyDetailDonation" resultMap="DetailResponse">
+        select d.*,u.* from donation d,user u where d.donation_user_id = u.user_id and d.donation_id = #{id}
+    </select>
 </mapper>

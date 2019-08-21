@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xihua.weixiao.utils.BeanPropertiesCopyUtils;
 import com.xihua.weixiao.vo.request.ChatRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
+import com.xihua.weixiao.vo.response.ChatAllResponse;
 import com.xihua.weixiao.vo.response.ChatNumResponse;
 import com.xihua.weixiao.vo.response.ChatResponse;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,21 @@ public class ChatServiceImpl extends ServiceImpl<ChatMapper, Chat> implements Ch
     @Override
     public List<ChatResponse> queryChatContent(ChatQuery query) {
         return chatMapper.selectChatContent(query);
+    }
+
+    @Override
+    public List<ChatAllResponse> getAllChatById(IdRequest idRequest) {
+        return chatMapper.getAllChatById(idRequest);
+    }
+
+    @Override
+    public List<ChatAllResponse> getChatContent(ChatQuery chatQuery) {
+        return chatMapper.getChatContent(chatQuery);
+    }
+
+    @Override
+    public int deleteByUserId(ChatQuery chatQuery) {
+        return chatMapper.deleteByUserId(chatQuery);
     }
 
 }

@@ -44,7 +44,20 @@ public class Goods implements Serializable {
     private Integer goodsNum;
     @TableField("goods_create_time")
     private Long goodsCreateTime;
+    @TableField("goods_place")
+    private String goodsPlace;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getGoodsPlace() {
+        return goodsPlace;
+    }
+
+    public void setGoodsPlace(String goodsPlace) {
+        this.goodsPlace = goodsPlace;
+    }
 
     public Integer getGoodsId() {
         return goodsId;

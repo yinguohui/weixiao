@@ -24,6 +24,23 @@
             <result column="user_img" property="userImg" />
         </association>
     </resultMap>
+    <resultMap id="responseAboutMeReview" type="com.xihua.weixiao.vo.response.MineReviewResponse">
+        <id column="review_id" property="reviewId" />
+        <result column="review_content" property="reviewContent" />
+        <result column="review_topic_id" property="reviewTopicId" />
+        <result column="review_user_id" property="reviewUserId" />
+        <result column="review_create_time" property="reviewCreateTime" />
+        <association property="user" javaType="com.xihua.weixiao.entity.User">
+            <id column="user_id" property="userId" />
+            <result column="user_name" property="userName" />
+            <result column="user_img" property="userImg" />
+        </association>
+        <association property="topic" javaType="com.xihua.weixiao.entity.Topic">
+            <id column="topic_id" property="topicId"/>
+            <result column="topic_content" property="topicContent"/>
+            <result column="topic_img" property="topicImg" />
+        </association>
+    </resultMap>
 
 
     <select id="queryReviewByTopicId" resultMap="responseReview">
@@ -36,5 +53,12 @@
 
     <select id="queryByTopicId" resultMap="responseReview">
         select r.*,u.* from review r,user u where review_topic_id = #{id} and u.user_id = r.review_user_id
+    </select>
+
+    <select id="getMineReview" resultMap="responseAboutMeReview">
+         SELECT r.*,t.topic_id,t.topic_content,t.topic_img,u.user_id,u.user_name,u.user_img from review r,topic t,user u WHERE
+         t.topic_user_id = #{id}
+         and r.review_topic_id = t.topic_id
+         and r.review_user_id = u.user_id
     </select>
 </mapper>

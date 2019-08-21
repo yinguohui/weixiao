@@ -6,6 +6,7 @@ import com.xihua.weixiao.result.ApiResult;
 import com.xihua.weixiao.service.UserService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xihua.weixiao.utils.BeanPropertiesCopyUtils;
+import com.xihua.weixiao.utils.FileUtils;
 import com.xihua.weixiao.vo.request.IdQueryRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.LoginRequest;
@@ -15,6 +16,8 @@ import com.xihua.weixiao.vo.response.UserResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.UUID;
@@ -32,6 +35,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private FileUtils fileUtils;
 
     //登陆
 
@@ -42,9 +47,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return ApiResult.failure("账号不存在");
         }
         if (user.getUserPassword().equals(request.getUserPassword())){
-            IdrResponse idrResponse = new IdrResponse();
-            idrResponse.setId(user.getUserId());
-            return ApiResult.success(idrResponse);
+            UserResponse userResponse = new UserResponse();
+            BeanPropertiesCopyUtils.copyProperties(user,userResponse);
+            return ApiResult.success(userResponse);
         } else{
             return ApiResult.failure("密码错误");
         }
@@ -88,17 +93,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 修改个人信息
     @Override
-    public int updateUserInfo(UserRequest user) {
+    public int updateUserInfo(@RequestBody UserRequest user) {
         User user1 = new User();
-        BeanPropertiesCopyUtils.copyProperties(user1,user);
+        BeanPropertiesCopyUtils.copyProperties(user,user1);
        return userMapper.updateById(user1);
     }
 
     @Override
     public UserResponse getUserInfoById(IdRequest idRequest) {
         UserResponse response = new UserResponse();
-        BeanPropertiesCopyUtils.copyProperties(response,userMapper.selectById(idRequest.getId()));
+        BeanPropertiesCopyUtils.copyProperties(userMapper.selectById(idRequest.getId()),response);
         return response;
+    }
+
+    @Override
+    public int createTitle(String userid, MultipartFile create) {
+        User user = new User();
+        user.setUserId(Integer.parseInt(userid));
+        String name = fileUtils.getUpUrl("head/",create);
+        user.setUserImg(name);
+        return userMapper.updateById(user);
     }
 
     // 查询个人信息
