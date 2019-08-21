@@ -3,6 +3,8 @@ package com.xihua.weixiao.entity;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+
 import java.io.Serializable;
 
 /**
@@ -18,7 +20,7 @@ public class Chat implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("chat_id")
+    @TableId(value ="chat_id",type = IdType.AUTO)
     private Integer chatId;
     @TableField("chat_no")
     private String chatNo;

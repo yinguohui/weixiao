@@ -37,12 +37,13 @@ public class ChatController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public ApiResult addChat(ChatRequest request) {
+    public ApiResult addChat(@RequestBody ChatRequest request) {
         try {
             ApiResult apiResult = ApiResult.success();
             apiResult.setData(service.addChat(request));
             return apiResult;
         } catch (Exception e) {
+            e.printStackTrace();
             return ApiResult.failure("");
         }
     }
