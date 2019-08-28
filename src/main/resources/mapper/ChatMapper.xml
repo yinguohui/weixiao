@@ -55,4 +55,24 @@
     <delete id="deleteByUserId">
         delete from chat where chat_send_id =  #{chatSendId} and chat_revice_id =  #{chatReviceIdchatReviceId}
     </delete>
+    <select id="selectAllChatUser">
+        SELECT user_id,user_name,user_img,chat_content,chat_create_time
+        FROM
+        user u,
+        (SELECT c.chat_id,c.id,MAX(chat_create_time) chat_create_time,chat_content FROM
+        (SELECT chat_id,chat_revice_id id,MAX(chat_create_time) chat_create_time,chat_content
+        FROM chat
+        WHERE chat_send_id = #{id}
+        group by chat_revice_id
+        UNION
+        SELECT  chat_id,chat_send_id AS id,MAX(chat_create_time) chat_create_time,chat_content
+        FROM chat
+        WHERE chat_revice_id = #{id}
+        group by chat_send_id) c
+        GROUP BY c.id) t
+        WHERE
+        u.user_id = t.id
+        GROUP BY t.id
+        ORDER BY chat_create_time DESC
+    </select>
 </mapper>

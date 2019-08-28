@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.xihua.weixiao.query.ChatQuery;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.response.ChatAllResponse;
+import com.xihua.weixiao.vo.response.ChatAllUserResponse;
 import com.xihua.weixiao.vo.response.ChatNumResponse;
 import com.xihua.weixiao.vo.response.ChatResponse;
 
@@ -27,4 +28,6 @@ public interface ChatMapper extends BaseMapper<Chat> {
     public List<ChatAllResponse> getChatContent(ChatQuery chatQuery);
 
     int deleteByUserId(ChatQuery chatQuery);
+
+    List<ChatAllUserResponse> selectAllChatUser(IdRequest idRequest);
 }

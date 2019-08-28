@@ -133,6 +133,22 @@ public class ChatController {
     }
 
     //selectAllChatUser
-
+    /**
+     * @Description : 查询所有最近聊天的记录
+     * @Author: ygh
+     * @Date: 2019/7/30 23:01
+     */
+    @RequestMapping("/selectallchatuser")
+    @ResponseBody
+    public ApiResult selectAllChatUser(@RequestBody IdRequest idRequest) {
+        try {
+            ApiResult apiResult = ApiResult.success();
+            apiResult.setData(service.selectAllChatUser(idRequest));
+            return apiResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResult.failure("");
+        }
+    }
 }
 

@@ -9,6 +9,7 @@ import com.xihua.weixiao.utils.BeanPropertiesCopyUtils;
 import com.xihua.weixiao.vo.request.ChatRequest;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.response.ChatAllResponse;
+import com.xihua.weixiao.vo.response.ChatAllUserResponse;
 import com.xihua.weixiao.vo.response.ChatNumResponse;
 import com.xihua.weixiao.vo.response.ChatResponse;
 import org.springframework.stereotype.Service;
@@ -64,6 +65,11 @@ public class ChatServiceImpl extends ServiceImpl<ChatMapper, Chat> implements Ch
     @Override
     public int deleteByUserId(ChatQuery chatQuery) {
         return chatMapper.deleteByUserId(chatQuery);
+    }
+
+    @Override
+    public List<ChatAllUserResponse> selectAllChatUser(IdRequest idRequest) {
+        return chatMapper.selectAllChatUser(idRequest);
     }
 
 }
