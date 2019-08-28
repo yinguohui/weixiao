@@ -7,10 +7,7 @@ import com.xihua.weixiao.service.UserService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.xihua.weixiao.utils.BeanPropertiesCopyUtils;
 import com.xihua.weixiao.utils.FileUtils;
-import com.xihua.weixiao.vo.request.IdQueryRequest;
-import com.xihua.weixiao.vo.request.IdRequest;
-import com.xihua.weixiao.vo.request.LoginRequest;
-import com.xihua.weixiao.vo.request.UserRequest;
+import com.xihua.weixiao.vo.request.*;
 import com.xihua.weixiao.vo.response.IdrResponse;
 import com.xihua.weixiao.vo.response.UserResponse;
 import org.slf4j.Logger;
@@ -37,7 +34,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
     @Resource
     private FileUtils fileUtils;
-
     //登陆
 
     @Override
@@ -58,12 +54,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     // 注册
     @Override
-    public ApiResult telRegister(LoginRequest request) {
+    public ApiResult telRegister(LoginRequest request ,MultipartFile [] files) {
         User user = new User();
         user.setUserNo(UUID.randomUUID().toString());
         user.setUserTel(request.getUserTel());
         user.setUserPassword(request.getUserPassword());
-        Integer a =userMapper.repeatTel(request.getUserTel());
+        String name = fileUtils.getUpUrl("idntify/",files);
+        user.setUserAuthentication(name);
+        Integer a = userMapper.repeatTel(request.getUserTel());
         if (userMapper.repeatTel(request.getUserTel())>0){
             logger.info("电话号码已存在，请选择重置密码"+user.toString());
            return ApiResult.failure("电话号码已存在，请选择重置密码");
@@ -115,13 +113,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.updateById(user);
     }
 
-    // 查询个人信息
-    public ApiResult queryUserInfoById(IdRequest idRequest) {
-        User newuser = userMapper.selectById(idRequest.getId());
-        if (null==newuser){
-            return ApiResult.failure("用户不存在");
+    @Override
+    public int updateUserPassword(PasswordRequest passwordRequest) {
+        User user = userMapper.selectById(passwordRequest.getUserId());
+        if (user.getUserPassword().equals(passwordRequest.getOldPasswrod())){
+            user.setUserPassword(passwordRequest.getNewPassword());
+            return userMapper.updateById(user);
+        }else {
+            return -1;
         }
-        return ApiResult.success(newuser);
     }
 
 }

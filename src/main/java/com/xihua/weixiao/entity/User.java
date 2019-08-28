@@ -42,6 +42,8 @@ public class User implements Serializable {
     private Integer userRole;
     @TableField("user_sign")
     private String userSign;
+    @TableField("user_authentication")
+    private String userAuthentication;
 
 
     public Integer getUserId() {
@@ -132,20 +134,11 @@ public class User implements Serializable {
         this.userSign = userSign;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-        ", userId=" + userId +
-        ", userNo=" + userNo +
-        ", userName=" + userName +
-        ", userPassword=" + userPassword +
-        ", userStatus=" + userStatus +
-        ", userImg=" + userImg +
-        ", userCreateTime=" + userCreateTime +
-        ", userTel=" + userTel +
-        ", userBirth=" + userBirth +
-        ", userRole=" + userRole +
-        ", userSign=" + userSign +
-        "}";
+    public String getUserAuthentication() {
+        return userAuthentication;
+    }
+
+    public void setUserAuthentication(String userAuthentication) {
+        this.userAuthentication = userAuthentication;
     }
 }
