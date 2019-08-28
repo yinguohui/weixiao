@@ -47,7 +47,7 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
 
     // 发表主题
     @Override
-    public Integer addTopic(TopicRequest topicRequest, MultipartFile[] files,String filepath){
+    public Integer addTopic(TopicRequest topicRequest, MultipartFile[] files){
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
         Topic topic = new Topic();
         topic.setTopicNo(uuid);

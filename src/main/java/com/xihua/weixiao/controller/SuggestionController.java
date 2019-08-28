@@ -133,7 +133,6 @@ public class SuggestionController {
             return ApiResult.failure("");
         }
     }
-    //DonationDetailResponse
     /**
      * @Description :
      * @Author: ygh

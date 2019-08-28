@@ -1,15 +1,10 @@
 package com.xihua.weixiao.controller;
 
-
-import com.xihua.weixiao.entity.Donation;
-import com.xihua.weixiao.entity.Page;
-import com.xihua.weixiao.entity.Topic;
 import com.xihua.weixiao.query.TopicQuery;
 import com.xihua.weixiao.result.ApiResult;
 import com.xihua.weixiao.service.TopicService;
 import com.xihua.weixiao.vo.request.IdRequest;
 import com.xihua.weixiao.vo.request.TopicRequest;
-import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +33,7 @@ public class TopicController {
     private TopicService topicService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TopicController.class);
+
     /**
      * @Description : 查询自己的话题
      * @Author: ygh
@@ -45,16 +41,17 @@ public class TopicController {
      */
     @RequestMapping("/getTopicByMe")
     @ResponseBody
-    public ApiResult getTopicByMe(IdRequest idRequest) {
+    public ApiResult getTopicByMe(@RequestBody IdRequest idRequest) {
+        ApiResult apiResult = ApiResult.success();
         try {
-            ApiResult apiResult = ApiResult.success();
             apiResult.setData(topicService.getTopicByMe(idRequest));
-            return apiResult;
         } catch (Exception e) {
-            LOGGER.info("s",e);
-            return ApiResult.failure("");
+            LOGGER.info(e.getMessage());
+            apiResult =  ApiResult.failure("");
         }
+        return apiResult;
     }
+
     /**
      * @Description : 查询主提通过Id
      * @Author: ygh
@@ -79,23 +76,23 @@ public class TopicController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public ApiResult addTopic(TopicRequest topicRequest, MultipartFile[] files, HttpServletRequest request) {
+    public ApiResult addTopic(TopicRequest topicRequest, MultipartFile[] files) {
+        ApiResult apiResult = ApiResult.success();
         try {
-
-            ApiResult apiResult = ApiResult.success();
-            String path = request.getContextPath()+"";
-            topicService.addTopic(topicRequest,files,path);
-            return apiResult;
+            topicService.addTopic(topicRequest,files);
         } catch (Exception e) {
             LOGGER.info("发布主题失败",e);
-            return ApiResult.failure("发布主题失败");
+            apiResult =  ApiResult.failure("发布主题失败");
         }
+        return apiResult;
     }
+
     /**
      * @Description : 删除发布的主题
      * @Author: ygh
      * @Date: 2019/7/30 23:14
      */
+
     @RequestMapping("/deleteTopic")
     @ResponseBody
     public ApiResult deleteTopicById(@RequestBody IdRequest request) {
@@ -108,6 +105,8 @@ public class TopicController {
             return ApiResult.failure("删除主题失败");
         }
     }
+
+
     /**
      * @Description : 查看所有主题
      * @Author: ygh

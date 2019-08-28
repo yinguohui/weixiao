@@ -21,7 +21,7 @@ import java.util.List;
  * @since 2019-07-24
  */
 public interface TopicService extends IService<Topic> {
-    public Integer addTopic(TopicRequest topicRequest, MultipartFile[] files, String filepath);
+    public Integer addTopic(TopicRequest topicRequest, MultipartFile[] files);
     public Integer deleteTopicById(IdRequest request);
     public List<TopicResponse> queryTopicAll(TopicQuery query);
     public TopicDetailResponse getTopicById(IdRequest idRequest);
