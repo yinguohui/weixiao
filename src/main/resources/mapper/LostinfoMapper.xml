@@ -39,7 +39,11 @@
 
     <select id="queryLostinfo" resultMap="LostinfoResponse">
         SELECT l.*,u.* FROM lostinfo l,user u
-        WHERE  lostinfo_type = #{id} and l.lostinfo_user_id = u.user_id
+        WHERE
+        <if test="id!=null">
+            l.lostinfo_type = #{id} and
+        </if>
+        l.lostinfo_user_id = u.user_id
 </select>
     <select id="queryDetailLost" resultMap="LostinfoResponse">
         SELECT l.*,u.* FROM lostinfo l,user u

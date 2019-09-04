@@ -72,9 +72,8 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
 
     // 查询所有主题
     @Override
-    public List<TopicResponse> queryTopicAll(TopicQuery query) {
-        query.setPageOffset((query.getCurrentPage()-1)*query.getPageSize());
-        return mapper.queryTopicAll(query);
+    public List<TopicResponse> queryTopicAll() {
+        return mapper.queryTopicAll();
     }
 
     // 通过Id获得主题
@@ -94,9 +93,5 @@ public class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implements
         return mapper.quaryTimeTopic(idRequest);
     }
 
-    @Override
-    public List<TopicResponse> queryMyTopicAll(IdRequest idRequest) {
-        return null;
-    }
 
 }

@@ -15,6 +15,7 @@
         <result column="user_birth" property="userBirth" />
         <result column="user_role" property="userRole" />
         <result column="user_sign" property="userSign" />
+        <result column="user_authentication" property="userAuthentication"/>
     </resultMap>
     
     <insert id="addUser" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">

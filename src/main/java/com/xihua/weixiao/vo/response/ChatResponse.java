@@ -16,6 +16,7 @@ public class ChatResponse  {
     private String chatContent;
     private Long chatCreateTime;
     private User user;
+    private Integer chatUserId;
 
 
     public User getUser() {
@@ -50,5 +51,11 @@ public class ChatResponse  {
         this.chatCreateTime = chatCreateTime;
     }
 
+    public Integer getChatUserId() {
+        return chatUserId;
+    }
 
+    public void setChatUserId(Integer chatUserId) {
+        this.chatUserId = chatUserId;
+    }
 }

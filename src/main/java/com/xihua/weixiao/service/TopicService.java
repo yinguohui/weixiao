@@ -23,9 +23,8 @@ import java.util.List;
 public interface TopicService extends IService<Topic> {
     public Integer addTopic(TopicRequest topicRequest, MultipartFile[] files);
     public Integer deleteTopicById(IdRequest request);
-    public List<TopicResponse> queryTopicAll(TopicQuery query);
+    public List<TopicResponse> queryTopicAll();
     public TopicDetailResponse getTopicById(IdRequest idRequest);
     public List<Topic> getTopicByMe(IdRequest idRequest);
     public List<TopicTimeLine> quaryTimeTopic(IdRequest idRequest);
-    public List<TopicResponse> queryMyTopicAll(IdRequest idRequest);
 }

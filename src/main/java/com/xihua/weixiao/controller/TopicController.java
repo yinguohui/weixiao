@@ -114,10 +114,10 @@ public class TopicController {
      */
     @RequestMapping("/quaryAllTopic")
     @ResponseBody
-    public ApiResult queryTopicAll(TopicQuery query) {
+    public ApiResult queryTopicAll() {
         try {
             ApiResult apiResult = ApiResult.success();
-            apiResult.setData(topicService.queryTopicAll(query));
+            apiResult.setData(topicService.queryTopicAll());
             return apiResult;
         } catch (Exception e) {
             LOGGER.info("",e);

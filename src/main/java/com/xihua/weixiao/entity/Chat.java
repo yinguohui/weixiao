@@ -34,7 +34,8 @@ public class Chat implements Serializable {
     private Integer chatStatus;
     @TableField("chat_create_time")
     private Long chatCreateTime;
-
+    @TableField("chat_user_id")
+    private Integer chatUserId;
 
     public Integer getChatId() {
         return chatId;
@@ -90,6 +91,14 @@ public class Chat implements Serializable {
 
     public void setChatCreateTime(Long chatCreateTime) {
         this.chatCreateTime = chatCreateTime;
+    }
+
+    public Integer getChatUserId() {
+        return chatUserId;
+    }
+
+    public void setChatUserId(Integer chatUserId) {
+        this.chatUserId = chatUserId;
     }
 
     @Override

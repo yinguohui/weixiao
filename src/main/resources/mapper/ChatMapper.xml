@@ -11,6 +11,7 @@
         <result column="chat_content" property="chatContent" />
         <result column="chat_status" property="chatStatus" />
         <result column="chat_create_time" property="chatCreateTime" />
+        <result column="chat_user_id" property="chatUserId"/>
     </resultMap>
 
     <resultMap id="ResponseChat" type="com.xihua.weixiao.vo.response.ChatAllResponse">
@@ -18,6 +19,16 @@
         <result column="chat_send_id" property="chatSendId" />
         <result column="chat_content" property="chatContent" />
         <result column="chat_status" property="chatStatus" />
+        <result column="chat_create_time" property="chatCreateTime" />
+        <result column="chat_user_id" property="chatUserId"/>
+        <association property="user" javaType="com.xihua.weixiao.entity.User">
+            <id column="user_id" property="userId" />
+            <result column="user_name" property="userName" />
+            <result column="user_img" property="userImg" />
+        </association>
+    </resultMap>
+    <resultMap id="ResponseUserChat" type="com.xihua.weixiao.vo.response.ChatAllUserResponse">
+        <result column="chat_content" property="chatContent" />
         <result column="chat_create_time" property="chatCreateTime" />
         <association property="user" javaType="com.xihua.weixiao.entity.User">
             <id column="user_id" property="userId" />
@@ -42,7 +53,7 @@
 
     <select id="getAllChatById" resultMap="ResponseChat">
         SELECT B.*,u.* FROM
-        (SELECT * FROM chat WHERE chat_revice_id = #{id} ORDER BY chat_create_time DESC) B,user u
+        (SELECT * FROM chat WHERE chat_revice_id = #{id} ORDER BY chat_create_time asc ) B,user u
         WHERE u.user_id = B.chat_id GROUP BY B.chat_send_id
     </select>
     <select id="getChatContent" resultMap="ResponseChat">
@@ -50,12 +61,12 @@
         WHERE u.user_id=c.chat_send_id and chat_send_id = #{sendId}
         and c.chat_revice_id = #{receiveId}
         or (chat_send_id = #{receiveId} and c.chat_revice_id = #{sendId} and u.user_id=c.chat_send_id)
-        ORDER BY c.chat_create_time desc
+        ORDER BY c.chat_create_time asc
     </select>
     <delete id="deleteByUserId">
         delete from chat where chat_send_id =  #{chatSendId} and chat_revice_id =  #{chatReviceIdchatReviceId}
     </delete>
-    <select id="selectAllChatUser">
+    <select id="selectAllChatUser" resultMap="ResponseUserChat">
         SELECT user_id,user_name,user_img,chat_content,chat_create_time
         FROM
         user u,

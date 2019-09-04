@@ -61,7 +61,7 @@ public class SuggestionController {
      */
     @RequestMapping("/add")
     @ResponseBody
-    public ApiResult addSuggestion(Suggestion suggestion, MultipartFile [] files) {
+    public ApiResult addSuggestion(@RequestBody Suggestion suggestion, MultipartFile [] files) {
         try {
             ApiResult apiResult = ApiResult.success();
             apiResult.setData(service.addSuggestion(suggestion,files));

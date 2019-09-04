@@ -19,8 +19,7 @@ import java.util.List;
  * @since 2019-07-24
  */
 public interface TopicMapper extends BaseMapper<Topic> {
-    public List<TopicResponse> queryTopicAll(TopicQuery query);
-    public TopicResponse queryTopicResponse(IdRequest idRequest);
+    public List<TopicResponse> queryTopicAll();
     public List<Topic> queryMineTopic(IdRequest idRequest);
     public List<TopicTimeLine> quaryTimeTopic(IdRequest idRequest);
     public TopicDetailResponse getTopicById(IdRequest idRequest);

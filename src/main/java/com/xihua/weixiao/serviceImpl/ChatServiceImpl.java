@@ -1,7 +1,9 @@
 package com.xihua.weixiao.serviceImpl;
 
+import com.xihua.weixiao.dao.UserMapper;
 import com.xihua.weixiao.entity.Chat;
 import com.xihua.weixiao.dao.ChatMapper;
+import com.xihua.weixiao.entity.User;
 import com.xihua.weixiao.query.ChatQuery;
 import com.xihua.weixiao.service.ChatService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -30,7 +32,8 @@ import java.util.UUID;
 public class ChatServiceImpl extends ServiceImpl<ChatMapper, Chat> implements ChatService {
     @Resource
     private ChatMapper chatMapper;
-
+    @Resource
+    private UserMapper mapper;
     @Override
     public int addChat(ChatRequest request) {
         Chat chat = new Chat();
@@ -54,12 +57,20 @@ public class ChatServiceImpl extends ServiceImpl<ChatMapper, Chat> implements Ch
 
     @Override
     public List<ChatAllResponse> getAllChatById(IdRequest idRequest) {
-        return chatMapper.getAllChatById(idRequest);
+        List<ChatAllResponse> list = chatMapper.getAllChatById(idRequest);
+        return list;
     }
 
     @Override
     public List<ChatAllResponse> getChatContent(ChatQuery chatQuery) {
-        return chatMapper.getChatContent(chatQuery);
+        List<ChatAllResponse> list = chatMapper.getChatContent(chatQuery);
+        if (list.size()==0){
+            User user =  mapper.selectById(chatQuery.getSendId());
+            ChatAllResponse response = new ChatAllResponse();
+            response.setUser(user);
+            list.add(response);
+        }
+        return list;
     }
 
     @Override

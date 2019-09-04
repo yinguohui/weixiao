@@ -64,7 +64,7 @@
     </resultMap>
 
     <select id="queryTopicAll" resultMap="Response">
-        SELECT topic.* ,u.user_name,u.user_img  FROM topic,user u where u.user_id=topic.topic_user_id limit #{pageOffset} , #{pageSize}
+        SELECT topic.* ,u.user_name,u.user_img  FROM topic,user u where u.user_id=topic.topic_user_id
     </select>
     <select id="queryTopicResponse" resultType="com.xihua.weixiao.vo.response.TopicResponse">
         SELECT * FROM topic WHERE topic_id = #{id}
@@ -86,7 +86,7 @@
     <select id="queryMyTopicAll" resultMap="Response">
         SELECT topic.* ,u.user_name,u.user_img  FROM topic,user u where u.user_id=topic.topic_user_id
          and u.user_id = #{id}
-         limit #{pageOffset} , #{pageSize}
+--          limit #{pageOffset} , #{pageSize}
     </select>
 
 </mapper>
